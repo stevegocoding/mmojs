@@ -1,0 +1,13 @@
+{
+  "name": "mmojs",
+  "version": "0.1.0",
+  "description": "a mmo demo using nodejs, canvas",
+  "homepage": "http://magkbdev.com/",
+  "author": "Guangfu Shi <stevegocoding@gmail.com.com>",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-nodeunit": "~0.1.2",
+    "grunt-contrib-uglify": "~0.2.4"
+  }
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>MMOJs Demo</title>
+
+</head>
+
+
+<body class="intro">
+
+    <div class="container">
+        <div id="canvas">
+
+            <canvas id="entities"></canvas>
+
+        </div>
+    </div>
+
+    <script src="js/lib/require.js"> </script>
+
+    <script>
+
+        require.config({
+            baseUrl: "/mmojs/js/"
+            /*
+            packages: [
+                {name: "entity", location: "entity"}
+            ]
+            */
+        });
+
+        require(["home"], function() {
+                    console.log("haha");
+                }
+        );
+
+
+    </script>
+
+</body>
+</html>

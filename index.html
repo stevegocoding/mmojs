@@ -12,7 +12,9 @@
     <div class="container">
         <div id="canvas">
 
-            <canvas id="entities"></canvas>
+            <canvas id="entities" width="960" height="400">
+
+            </canvas>
 
         </div>
     </div>
@@ -22,12 +24,18 @@
     <script>
 
         require.config({
-            baseUrl: "/mmojs/js/"
-            /*
-            packages: [
-                {name: "entity", location: "entity"}
-            ]
-            */
+            baseUrl: "/mmojs/js/",
+            paths: {
+                "text" : "lib/text",
+                jquery: 'lib/jquery-1.10.2.min',
+                easeljs: 'lib/easeljs-0.7.0.min',
+                underscore: 'lib/underscore-min'
+            },
+            shim: {
+                easeljs: {
+                    exports: 'createjs'
+                }
+            }
         });
 
         require(["home"], function() {

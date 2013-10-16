@@ -1,0 +1,15 @@
+{
+    "id": "princess",
+    "frames": {
+        "width": 64,
+        "height": 64,
+        "count": 36
+    },
+    "animations": {
+        "default": [0],
+        "walk_north": [0,8],
+        "walk_west": [9,17],
+        "walk_south": [18,26],
+        "walk_east": [27,35]
+    }
+}

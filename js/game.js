@@ -5,8 +5,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-define(["entity/component", "entity/entity_registry", "entity/entity", "entity/entity_system"],
-    function(Comonent, EntityRegistry, Entity, EntitySystem) {
+define(["easeljs", "entity/world_factory"],
+    function(createjs, WorldFactory) {
 
         var Game = function() {
             this.initialize();
@@ -21,6 +21,23 @@ define(["entity/component", "entity/entity_registry", "entity/entity", "entity/e
             this._entities = {};
         };
 
+        p.setupStage = function(stageDOM) {
+            this._stage = new createjs.Stage(stageDOM);
+            this._stage.addEventListener("click", this.handleClick);
+            createjs.Ticker.addEventListener("tick", this.tickHandler.bind(this));
+        };
+
+        p.setupWorld = function() {
+            this._worldFactory = new WorldFactory();
+            this._world = this._worldFactory.createWorld();
+
+            if (this._stage === null)
+            {
+                // @TODO: should throw an exception
+            }
+            this._stage.addChild(this._world);
+        };
+
         p.run = function() {
 
             console.log("Starting the game!");
@@ -32,7 +49,6 @@ define(["entity/component", "entity/entity_registry", "entity/entity", "entity/e
         };
 
         p.start = function() {
-            this.tick();
             console.log("Game loop started.");
         };
 
@@ -42,41 +58,17 @@ define(["entity/component", "entity/entity_registry", "entity/entity", "entity/e
             console.log("Game loop stopped.");
         };
 
-        p.tick = function() {
+        p.tickHandler = function(event) {
             if(this.started) {
-                this.update();
-                this.render();
-            }
 
-            if(!this.isStopped) {
-                requestAnimFrame(this.tick.bind(this));
-            }
+                // update the world
+                this._world.update();
 
-            console.log("tick tick tick!");
-        };
+                // draw this frame, advance to next frame
+                this._stage.update(event);
 
-        p.update = function() {
-            for (var entityId in this._entities) {
-                this._entities[entityId].process();
+                console.log("tick tick tick!");
             }
-        };
-
-        p.render = function() {
-            for (var entityId in this._entities) {
-                this._entities[entityId].render();
-            }
-        };
-
-        p.addEntity = function(entity) {
-            if (this._entities[entity.id] === undefined) {
-                this._entities[entity.id] = entity;
-            }
-            else {
-                console.log("The entity already existed! " + entity.id);
-            }
-        };
-
-        p.removeEntity = function(entity) {
 
         };
 
@@ -84,7 +76,6 @@ define(["entity/component", "entity/entity_registry", "entity/entity", "entity/e
          * Processes game logic when the user triggers a click/touch event during the game.
          */
         p.handleClick = function() {
-
             console.log("Game -- handleClick()");
         };
 
@@ -94,8 +85,11 @@ define(["entity/component", "entity/entity_registry", "entity/entity", "entity/e
         p.isStopped = false;
 
         /* Private Properties */
-        p._entities = null;
 
+        // easeljs stage
+        p._stage = null;
+        p._world = null;
+        p._worldFactory = null;
 
         return Game;
     }

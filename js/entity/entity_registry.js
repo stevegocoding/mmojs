@@ -14,9 +14,6 @@ define(function() {
         this.initialize();
     };
 
-    EntityRegistry.componentTypeNameKey = 'component_type_name';
-    EntityRegistry.componentInstanceKey = 'component';
-
     var p = EntityRegistry.prototype;
 
     p.initialize = function() {
@@ -38,23 +35,32 @@ define(function() {
 
         }
         else {
+            if (components !== null) {
+                var compsRegistry = {};
+                for (var c in components) {
+                    if (components.hasOwnProperty(c))
+                        compsRegistry[c] = components[c];
+                }
 
-            var compsRegistry = {};
-            var c;
-            for (c in components) {
-                compsRegistry[c[EntityRegistry.componentTypeNameKey]] = c[EntityRegistry.componentInstanceKey];
+                this._entityRegistry[entityTypeName] = compsRegistry;
             }
-
-            this._entityRegistry[entityTypeName] = compsRegistry;
+            else {
+                this._entityRegistry[entityTypeName] = {};
+            }
         }
     };
 
 
-    p.addComponent = function(entityTypeName, c) {
+    p.addComponent = function(entityTypeName, comp) {
         var compsRegistry = this.getEntityRegistry(entityTypeName);
 
         if (compsRegistry != null) {
-            compsRegistry[c[EntityRegistry.componentTypeNameKey]] = c[EntityRegistry.componentInstanceKey];
+            var reg = {};
+            for (var c in comp) {
+                if (comp.hasOwnProperty(c))
+                    reg[c] = comp[c];
+            }
+            compsRegistry[c] = comp[c];
         }
     };
 

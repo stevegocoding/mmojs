@@ -6,14 +6,6 @@
  * Bootstrap file will be responsible for configuring Require.js and loading initially important dependencies.
  */
 
-
-require.config({
-    paths: {
-        jquery: 'lib/jquery-1.10.2.min',
-        easeljs: 'lib/easeljs-0.7.0.min'
-    }
-});
-
 require(['jquery', 'app', 'game'], function($, App, Game) {
 
     var app, game;
@@ -23,7 +15,10 @@ require(['jquery', 'app', 'game'], function($, App, Game) {
 
             console.log("DOM is ready! We can initialize the app and game now!");
 
-            InitGame();
+            game = new Game();
+
+            game.setupStage($('#entities').get(0));
+            game.setupWorld();
 
             app = new App(game);
 
@@ -33,6 +28,9 @@ require(['jquery', 'app', 'game'], function($, App, Game) {
 
     var InitGame = function() {
         game = new Game();
+
+        game.setupStage("entities");
+        game.setupWorld();
     };
 
     InitApp();

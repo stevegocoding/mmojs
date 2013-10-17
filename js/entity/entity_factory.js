@@ -8,8 +8,8 @@
 define(["easeljs",
         "entity/entity",
         "entity/entity_registry",
-        "components/sprite_renderer",
-        "entity/game_types"], function(createjs, Entity, EntityRegistry, SpriteRenderer) {
+        "components/simple_sprite_renderer",
+        "entity/game_types"], function(createjs, Entity, EntityRegistry, SimpleSpriteRenderer) {
 
     var EntityFactory = function() {
 
@@ -29,8 +29,8 @@ define(["easeljs",
     EntityFactory.factories[Types.Entities.WARRIOR] = function(entityData) {
         var ent = new Entity(entityData);
 
-        var renderer = new SpriteRenderer();
-        renderer.createLayer(entityData.getDefaultLayerData());
+        var renderer = new SimpleSpriteRenderer();
+        renderer.setAnimation(entityData.getDefaultLayerData(), "walk_east");
         ent.attachComponent("renderer", renderer);
 
         return ent;

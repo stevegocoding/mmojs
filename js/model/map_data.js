@@ -7,23 +7,22 @@
 
 define(["jquery"], function($) {
 
-    var MapData = function() {
-        this.initialize();
+    var MapData = function(filePath) {
+        this.initialize(filePath);
     };
 
     var p = MapData.prototype;
 
-    p.initialize = function() {
+    p.initialize = function(filePath) {
 
         var useWebWorker = false;
 
-        this._loadMap(useWebWorker);
+        this._loadMap(filePath, useWebWorker);
         this._initTilesets();
     };
 
-    p._loadMap = function(useWebWorker) {
+    p._loadMap = function(filePath, useWebWorker) {
         var self = this;
-        var filePath = "maps/map_client.json";
         if (useWebWorker) {
 
         }

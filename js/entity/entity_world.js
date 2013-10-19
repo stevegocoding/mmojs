@@ -17,6 +17,10 @@ define(["easeljs"], function(createjs) {
         this._entities = {};
     };
 
+    p.initMap = function(mapData) {
+
+    };
+
     p.addEntity = function(entity) {
         if (this._entities[entity.id] === undefined) {
             this._entities[entity.id] = entity;
@@ -40,6 +44,18 @@ define(["easeljs"], function(createjs) {
         for (var entityId in this._entities) {
             this._entities[entityId].process();
         }
+    };
+
+
+    /**
+     * Overriden draw method from
+     * @param ctx
+     * @param ignoreCache
+     */
+    p.draw = function(ctx, ignoreCache) {
+
+        
+
     };
 
 

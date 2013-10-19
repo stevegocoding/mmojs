@@ -7,8 +7,9 @@
 
 define(["entity/entity_factory",
         "entity/entity_world",
+        "sprites/sprites",
         "model/entity_data",
-        "sprites/sprites"], function(EntityFactory, EntityWorld, EntityData, sprites) {
+        "model/map_data"], function(EntityFactory, EntityWorld, sprites, EntityData, MapData) {
 
     var WorldFactory = function() {
 
@@ -20,18 +21,32 @@ define(["entity/entity_factory",
 
         var world = new EntityWorld();
 
+        var mapData = new MapData();
+        mapData.ready(function() {
+            log.info("Map loaded!"); 
+        });
+
+
+
         var playerData = {
             "id": 1,
             "name": "Steve",
             "type": "Warrior",
             "default_layer": sprites["princess"]
         };
+
         var player = EntityFactory.createEntity(Types.Entities.WARRIOR, new EntityData(playerData));
 
 
         world.addEntity(player);
 
+
+
         return world;
+    };
+
+    p.loadMap = function() {
+
     };
 
     return WorldFactory;

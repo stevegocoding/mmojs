@@ -90,6 +90,7 @@ define(["easeljs", "entity/world_factory"],
         p._stage = null;
         p._world = null;
         p._worldFactory = null;
+        p._map = null;
 
         return Game;
     }

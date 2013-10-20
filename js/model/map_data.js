@@ -5,7 +5,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-define(["jquery"], function($) {
+define(["jquery", "log"], function($) {
 
     var MapData = function(filePath) {
         this.initialize(filePath);

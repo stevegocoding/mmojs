@@ -10,11 +10,11 @@ define(["entity/component", "easeljs"], function(Component) {
         this.initialize();
     };
 
-    var p = SimpleSpriteRenderer.prototype = new Component();
+    var super_p = Component.prototype,
+        p = SimpleSpriteRenderer.prototype = Object.create(super_p);
 
-    p.Component_initialize = p.initialize;
     p.initialize = function() {
-        this.Component_initialize();
+        super_p.initialize.call(this);
     };
 
     p.setAnimation = function(spritesheetData, defaultAnim) {
@@ -32,4 +32,4 @@ define(["entity/component", "easeljs"], function(Component) {
 
 
     return SimpleSpriteRenderer;
-}); 
+});

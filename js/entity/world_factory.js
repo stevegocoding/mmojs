@@ -21,10 +21,13 @@ define(["entity/entity_factory",
 
         var world = new EntityWorld();
 
+
+        /*
         var mapData = new MapData();
         mapData.ready(function() {
-            log.info("Map loaded!"); 
+            log.info("Map loaded!");
         });
+        */
 
 
 

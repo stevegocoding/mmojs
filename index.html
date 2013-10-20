@@ -29,7 +29,8 @@
                 "text" : "lib/text",
                 jquery: 'lib/jquery-1.10.2.min',
                 easeljs: 'lib/easeljs-0.7.0.min',
-                underscore: 'lib/underscore-min'
+                underscore: 'lib/underscore-min',
+                log: "lib/log"
             },
             shim: {
                 easeljs: {
@@ -43,6 +44,36 @@
                 }
         );
 
+        /*
+        var Person = function() {
+
+        };
+        var p = Person.prototype;
+        p.constructor = Person;
+
+        p.greeting = function() {
+            console.log("Hello!");
+        };
+
+        var Worker = function() {
+        };
+
+        Worker.prototype = Object.create(Person.prototype);
+        Worker.prototype.constructor = Worker;
+
+        Worker.prototype.Person_greeting = Worker.prototype.greeting;
+        Worker.prototype.greeting = function() {
+
+            this.Person_greeting();
+            console.log("Hello I am a worker!");
+        };
+
+        var per = new Person();
+
+        var worker = new Worker();
+        worker.greeting();
+
+        */
 
     </script>
 

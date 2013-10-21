@@ -161,6 +161,21 @@ define(["jquery", "log"], function($) {
         return _.indexOf(this.high, id+1) >= 0;
     };
 
+
+    p.getId = function() {
+        return this._id;
+    };
+
+    p.getName = function() {
+        return this._name;
+    };
+
+    p.getTypeName = function() {
+        return this._typeName;
+    };
+
+
+    p.tilesets = [];
     p.data = [];
     p.width = 0;
     p.height = 0;
@@ -177,6 +192,10 @@ define(["jquery", "log"], function($) {
     p.tilesetsLoaded = false;
     p.mapLoaded = false;
     p.tilesetCount = 1;
+
+    p._id = 999;
+    p._name = "map";
+    p._typeName = "Map";
 
 
     return MapData;

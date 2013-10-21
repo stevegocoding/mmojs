@@ -24,6 +24,15 @@ define(["easeljs",
         }
     };
 
+    EntityFactory.createTerrain = function(mapData) {
+
+
+
+
+    };
+
+
+
     EntityFactory.factories = [];
 
     EntityFactory.factories[Types.Entities.WARRIOR] = function(entityData) {
@@ -35,6 +44,8 @@ define(["easeljs",
 
         return ent;
     };
+
+    EntityFactory.factories[Types.Entities]
 
 
     return EntityFactory;

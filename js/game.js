@@ -21,21 +21,21 @@ define(["easeljs", "entity/world_factory"],
             this._entities = {};
         };
 
-        p.setupStage = function(stageDOM) {
-            this._stage = new createjs.Stage(stageDOM);
-            this._stage.addEventListener("click", this.handleClick);
+        p.setupStage = function(stageDOM, backgroundDOM) {
+            this.entityStage = new createjs.Stage(stageDOM);
+            this.bgStage = new createjs.Stage(backgroundDOM);
+
             createjs.Ticker.addEventListener("tick", this.tickHandler.bind(this));
         };
 
         p.setupWorld = function() {
-            this._worldFactory = new WorldFactory();
+            this._worldFactory = new WorldFactory(this);
             this._world = this._worldFactory.createWorld();
 
-            if (this._stage === null)
+            if (this.entityStage === null)
             {
                 // @TODO: should throw an exception
             }
-            this._stage.addChild(this._world);
         };
 
         p.run = function() {
@@ -43,7 +43,7 @@ define(["easeljs", "entity/world_factory"],
             console.log("Starting the game!");
 
             this.started = true;
-            this.isStopped = false;
+            this.stopped = false;
 
             this.start();
         };
@@ -53,7 +53,7 @@ define(["easeljs", "entity/world_factory"],
         };
 
         p.stop = function() {
-            this.isStopped = true;
+            this.stopped = true;
             this.started = false;
             console.log("Game loop stopped.");
         };
@@ -64,10 +64,11 @@ define(["easeljs", "entity/world_factory"],
                 // update the world
                 this._world.update();
 
-                // draw this frame, advance to next frame
-                this._stage.update(event);
+                // draw the terrain
+                this.bgStage.update(event);
 
-                console.log("tick tick tick!");
+                // draw this frame, advance to next frame
+                this.entityStage.update(event);
             }
 
         };
@@ -82,12 +83,14 @@ define(["easeljs", "entity/world_factory"],
 
         /* Public Properties */
         p.started = false;
-        p.isStopped = false;
+        p.stopped = false;
 
         /* Private Properties */
 
         // easeljs stage
-        p._stage = null;
+        p.entityStage = null;
+        p.bgStage = null;
+
         p._world = null;
         p._worldFactory = null;
         p._map = null;

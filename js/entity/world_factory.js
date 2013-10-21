@@ -11,25 +11,29 @@ define(["entity/entity_factory",
         "model/entity_data",
         "model/map_data"], function(EntityFactory, EntityWorld, sprites, EntityData, MapData) {
 
-    var WorldFactory = function() {
-
+    var WorldFactory = function(game) {
+        this.initialize(game);
     };
 
     var p = WorldFactory.prototype;
 
+    p.initialize = function(game) {
+        this.game = game;
+    };
+
     p.createWorld = function() {
 
-        var world = new EntityWorld();
+        var world = new EntityWorld(this.game);
+        EntityWorld._instance = world;
 
-
-        /*
         var mapData = new MapData();
         mapData.ready(function() {
             log.info("Map loaded!");
         });
-        */
 
 
+        var terrain = EntityFactory.createTerrain(mapData);
+        world.setTerrain(terrain);
 
         var playerData = {
             "id": 1,
@@ -40,17 +44,12 @@ define(["entity/entity_factory",
 
         var player = EntityFactory.createEntity(Types.Entities.WARRIOR, new EntityData(playerData));
 
-
         world.addEntity(player);
-
-
 
         return world;
     };
 
-    p.loadMap = function() {
-
-    };
+    p.game = null;
 
     return WorldFactory;
 });

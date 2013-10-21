@@ -10,8 +10,9 @@ define(["entity/component", "easeljs"], function(Component) {
         this.initialize();
     };
 
-    var super_p = Component.prototype,
-        p = SimpleSpriteRenderer.prototype = Object.create(super_p);
+    var super_p = Component.prototype;
+    var p = SimpleSpriteRenderer.prototype = Object.create(super_p);
+    p.constructor = SimpleSpriteRenderer;
 
     p.initialize = function() {
         super_p.initialize.call(this);

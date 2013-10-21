@@ -26,24 +26,23 @@ define(["entity/entity_factory",
         var world = new EntityWorld(this.game);
         EntityWorld._instance = world;
 
+        // Create Map
         var mapData = new MapData();
         mapData.ready(function() {
             log.info("Map loaded!");
         });
 
-
         var terrain = EntityFactory.createTerrain(mapData);
         world.setTerrain(terrain);
 
+        // Creat a character
         var playerData = {
             "id": 1,
             "name": "Steve",
             "type": "Warrior",
             "default_layer": sprites["princess"]
         };
-
         var player = EntityFactory.createEntity(Types.Entities.WARRIOR, new EntityData(playerData));
-
         world.addEntity(player);
 
         return world;

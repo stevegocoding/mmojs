@@ -9,7 +9,9 @@ define(["easeljs",
         "entity/entity",
         "entity/entity_registry",
         "components/simple_sprite_renderer",
-        "entity/game_types"], function(createjs, Entity, EntityRegistry, SimpleSpriteRenderer) {
+        "components/map_renderer"
+        "entity/game_types"],
+    function(createjs, Entity, EntityRegistry, SimpleSpriteRenderer, MapRenderer) {
 
     var EntityFactory = function() {
 
@@ -26,12 +28,16 @@ define(["easeljs",
 
     EntityFactory.createTerrain = function(mapData) {
 
+        mapData._id = 999;
+        mapData._name = "map_entity";
+        mapData._typename = "Map";
 
+        var ent = new Entity(mapData);
+        var renderer = new MapRenderer(mapData);
+        ent.attachComponent("renderer", renderer);
 
-
+        return ent;
     };
-
-
 
     EntityFactory.factories = [];
 
@@ -44,8 +50,6 @@ define(["easeljs",
 
         return ent;
     };
-
-    EntityFactory.factories[Types.Entities]
 
 
     return EntityFactory;

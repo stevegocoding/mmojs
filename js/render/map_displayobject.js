@@ -9,7 +9,7 @@
 define(["entity/entity_world", "easeljs"], function(EntityWorld) {
 
     var MapDisplayObject = function(mapData) {
-
+        this.initialize(mapData);
     };
 
     var super_p = createjs.DisplayObject.prototype;

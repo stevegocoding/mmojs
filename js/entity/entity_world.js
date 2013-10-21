@@ -33,10 +33,12 @@ define(["easeljs"], function() {
         }
     };
 
-    p.setTerrain = function(terrain) {
+    p.setTerrain = function(mapEntity) {
         if (this._map === null) {
-            this._map = terrain;
-            this.game.entityStage.addChild(terrain);
+            this._map = mapEntity;
+
+            var renderer = mapEntity.getComponent("renderer");
+            this.game.bgStage.addChild(renderer.getDisplayObject());
         }
         else
             throw Error("The terrain has already been set!");

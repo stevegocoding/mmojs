@@ -15,14 +15,28 @@ define(["easeljs"], function() {
 
     p.initialize = function(game) {
         this.game = game;
+
+        this.rescale(this.getScaleFactor());
+
+
         this._entities = {};
+    };
+
+    p.setCamera = function(cam) {
+        this.camera = cam;
+
+        this.game.entityStage.width = this.camera.gridW;
+        this.game.entityStage.height = this.camera.gridH;
+
+        this.game.bgStage.width = this.game.entityStage.width;
+        this.game.bgStage.height = this.game.entityStage.height;
     };
 
     p.addEntity = function(entity) {
         if (this._entities[entity.id] === undefined) {
             this._entities[entity.id] = entity;
 
-            if (entity.isDrawable())
+            if (entity.drawable)
             {
                 var renderer = entity.getComponent("renderer");
                 this.game.entityStage.addChild(renderer.getDisplayObject());
@@ -90,6 +104,30 @@ define(["easeljs"], function() {
         }
     };
 
+    p.rescale = function(factor) {
+        this.scale = this.getScaleFactor();
+    };
+
+    p.getScaleFactor = function() {
+        var w = window.innerWidth,
+            h = window.innerHeight,
+            scale;
+
+        this.mobile = false;
+
+        if(w <= 1000) {
+            scale = 2;
+            this.mobile = true;
+        }
+        else if(w <= 1500 || h <= 870) {
+            scale = 2;
+        }
+        else {
+            scale = 3;
+        }
+
+        return scale;
+    };
 
     EntityWorld._instance = null;
     EntityWorld.instance = function() {
@@ -114,9 +152,11 @@ define(["easeljs"], function() {
 
     p.game = null;
 
+    // Rendering parameters
     p.camera = null;
-
     p.scale = 1.0;
+    p.mobile = false;
+
 
     return EntityWorld;
 });

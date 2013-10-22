@@ -9,7 +9,7 @@ define(["easeljs",
         "entity/entity",
         "entity/entity_registry",
         "components/simple_sprite_renderer",
-        "components/map_renderer"
+        "components/map_renderer",
         "entity/game_types"],
     function(createjs, Entity, EntityRegistry, SimpleSpriteRenderer, MapRenderer) {
 

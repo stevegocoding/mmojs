@@ -21,7 +21,7 @@ define(["entity/entity_registry", "easeljs"], function(EntityRegistry) {
     p._name = "default_entity";
     p._typeName = "default_type";
     p._enityRegistry = null;
-    p._drawable = true;
+    p.drawable = true;
 
     /* Constructor */
     p.initialize = function(entityData) {
@@ -63,10 +63,6 @@ define(["entity/entity_registry", "easeljs"], function(EntityRegistry) {
     p.getComponent = function(componentName) {
         var c = EntityRegistry.GetRegistryInstance().getComponent(this._typeName, componentName);
         return c;
-    };
-
-    p.isDrawable = function() {
-        return this._drawable;
     };
 
     return Entity;

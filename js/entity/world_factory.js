@@ -9,7 +9,9 @@ define(["entity/entity_factory",
         "entity/entity_world",
         "sprites/sprites",
         "model/entity_data",
-        "model/map_data"], function(EntityFactory, EntityWorld, sprites, EntityData, MapData) {
+        "model/map_data",
+        "render/camera"],
+    function(EntityFactory, EntityWorld, sprites, EntityData, MapData, Camera) {
 
     var WorldFactory = function(game) {
         this.initialize(game);
@@ -21,10 +23,20 @@ define(["entity/entity_factory",
         this.game = game;
     };
 
+    p.createCamera = function() {
+        var cam = new Camera();
+        cam.rescale();
+        return cam;
+    };
+
     p.createWorld = function() {
 
         var world = new EntityWorld(this.game);
         EntityWorld._instance = world;
+
+        // Set camera
+        var cam = this.createCamera();
+        world.setCamera(cam);
 
         // Create Map
         var mapData = new MapData();

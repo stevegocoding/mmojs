@@ -22,11 +22,13 @@ define(function() {
         p.gridY = 0;
         p.offset = 0.5;
 
-        p.factor = 1;
+        this.rescale();
+    };
 
-        p.gridW = 15 * p.factor;
-        p.gridH = 7 * p.factor;
-
+    p.rescale = function() {
+        p.scaleFactor = 2;
+        p.gridW = 15 * p.scaleFactor;
+        p.gridH = 7 * p.scaleFactor;
     };
 
     p.setPosition = function(x, y) {
@@ -60,10 +62,10 @@ define(function() {
     p.gridY = 0;
     p.offset = 0.5;
 
-    p.factor = 1;
+    p.scaleFactor = 1;
 
     p.gridW = 0;
     p.gridH = 0;
 
-
+    return Camera;
 });

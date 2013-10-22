@@ -75,7 +75,7 @@ module.exports = function processMap(tiledJson, options) {
                     for (var p in property) {
                         var o = {};
                         o.name = p;
-                        handleProperty(o, tileId);
+                        handleProperty(o, parseInt(tileId)+1);
                     }
                 }
             }
@@ -88,7 +88,8 @@ module.exports = function processMap(tiledJson, options) {
 
     // Process layers
     if (tiledJson.layers instanceof Array) {
-        for (var i = 0; i < tiledJson.layers.length; ++i) {
+        console.log("layers: " + tiledJson.layers.length);
+        for (var i = tiledJson.layers.length-1; i >= 0; --i) {
             processLayer(tiledJson.layers[i]);
         }
     }

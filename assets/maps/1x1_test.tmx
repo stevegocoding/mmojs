@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="1" height="1" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="tilesheet" tilewidth="16" tileheight="16">
+  <image source="../images/tilesheet.png" width="320" height="1568"/>
+  <tile id="97">
+   <properties>
+    <property name="c" value=""/>
+    <property name="v" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 2" width="1" height="1">
+  <data>
+   <tile gid="11"/>
+  </data>
+ </layer>
+ <layer name="Tile Layer 1" width="1" height="1">
+  <data>
+   <tile gid="98"/>
+  </data>
+ </layer>
+</map>

@@ -17,20 +17,15 @@ require(['jquery', 'app', 'game'], function($, App, Game) {
 
             game = new Game();
 
-            game.setupStage($('#entities').get(0));
+            var canvasDom = $('#entities').get(0);
+            var bgCanvasDom = $('#background').get(0);
+            game.setupStage(canvasDom, bgCanvasDom);
             game.setupWorld();
 
             app = new App(game);
 
             app.startGame();
         })
-    };
-
-    var InitGame = function() {
-        game = new Game();
-
-        game.setupStage("entities");
-        game.setupWorld();
     };
 
     InitApp();

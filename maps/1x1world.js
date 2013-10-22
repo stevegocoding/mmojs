@@ -1,0 +1,1 @@
+var mapData = {"width":1,"height":1,"collisions":[0],"doors":[],"checkpoints":[],"data":[[11,98]],"high":[98],"animated":[],"blocking":[],"plateau":[],"musicAreas":[],"tilesize":16}

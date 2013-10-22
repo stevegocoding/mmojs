@@ -50,6 +50,7 @@ define(["easeljs"], function() {
     p.setTerrain = function(mapEntity) {
         if (this._map === null) {
             this._map = mapEntity;
+            this._mapData = mapEntity.entityData;
 
             var renderer = mapEntity.getComponent("renderer");
             this.game.bgStage.addChild(renderer.getDisplayObject());
@@ -74,7 +75,7 @@ define(["easeljs"], function() {
     };
 
     p.forEachVisibleTileIndex = function(callback, extra) {
-        var m = this._map;
+        var m = this._mapData;
 
         this.camera.forEachVisiblePosition(function(x, y) {
             if(!m.isOutOfBounds(x, y)) {
@@ -83,11 +84,16 @@ define(["easeljs"], function() {
         }, extra);
     };
 
+    var debug = true;
     p.forEachVisibleTile = function(callback, extra) {
-        var m =  this._map;
+        var m =  this._mapData;
 
         if (m.isLoaded) {
             this.forEachVisibleTileIndex(function(tileIndex) {
+
+                if (debug)
+                    console.log(tileIndex);
+
                 if(_.isArray(m.data[tileIndex])) {
                     _.each(m.data[tileIndex], function(id) {
                         callback(id-1, tileIndex);
@@ -102,6 +108,8 @@ define(["easeljs"], function() {
                 }
             }, extra);
         }
+
+        debug = false;
     };
 
     p.rescale = function(factor) {
@@ -149,6 +157,7 @@ define(["easeljs"], function() {
     // entiies map
     p._entities = null;
     p._map = null;
+    p._mapData = null;
 
     p.game = null;
 

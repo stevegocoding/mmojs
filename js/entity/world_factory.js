@@ -39,7 +39,9 @@ define(["entity/entity_factory",
         world.setCamera(cam);
 
         // Create Map
-        var mapData = new MapData();
+        var mapFile = "maps/world.json";
+        // var mapFile = "maps/1x1world.json";
+        var mapData = new MapData(mapFile);
         mapData.ready(function() {
             log.info("Map loaded!");
         });

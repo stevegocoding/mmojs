@@ -20,6 +20,9 @@ define(["entity/entity_registry", "easeljs"], function(EntityRegistry) {
     p.id = -1;
     p._name = "default_entity";
     p._typeName = "default_type";
+
+    p.entityData = null;
+
     p._enityRegistry = null;
     p.drawable = true;
 
@@ -30,6 +33,9 @@ define(["entity/entity_registry", "easeljs"], function(EntityRegistry) {
         this.id = entityData.getId();
         this._name = entityData.getName();
         this._typeName = entityData.getTypeName();
+
+        this.entityData = entityData;
+
         this._entityRegistry = EntityRegistry.GetRegistryInstance();
 
         this._entityRegistry.registerEntitity(this._typeName, null);
@@ -49,11 +55,9 @@ define(["entity/entity_registry", "easeljs"], function(EntityRegistry) {
     };
 
     p.process = function() {
-        console.log("Entity Process!");
     };
 
     p.render = function() {
-        console.log("Entity Render!");
     };
 
     p.getName = function() {

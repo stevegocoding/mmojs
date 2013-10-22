@@ -1,0 +1,58 @@
+{ "height":1,
+ "layers":[
+        {
+         "data":[11],
+         "height":1,
+         "name":"Tile Layer 2",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":1,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[98],
+         "height":1,
+         "name":"Tile Layer 1",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":1,
+         "x":0,
+         "y":0
+        }],
+ "orientation":"orthogonal",
+ "properties":
+    {
+
+    },
+ "tileheight":16,
+ "tilesets":[
+        {
+         "firstgid":1,
+         "image":"..\/images\/tilesheet.png",
+         "imageheight":1568,
+         "imagewidth":320,
+         "margin":0,
+         "name":"tilesheet",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":16,
+         "tileproperties":
+            {
+             "97":
+                {
+                 "c":"",
+                 "v":""
+                }
+            },
+         "tilewidth":16
+        }],
+ "tilewidth":16,
+ "version":1,
+ "width":1
+}

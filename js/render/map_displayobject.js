@@ -33,6 +33,10 @@ define(["entity/entity_world", "easeljs"], function(EntityWorld) {
 
         ctx.save();
 
+        this.drawMap(ctx);
+
+        this.drawHighTiles(ctx);
+
         ctx.restore();
 
     };
@@ -40,11 +44,12 @@ define(["entity/entity_world", "easeljs"], function(EntityWorld) {
     p.drawMap = function(ctx) {
 
         var self = this;
-        var numTilesX = this.mapData.width / this.mapData.tilesize;
+        // var numTilesX = this.mapData.width / this.mapData.tilesize;
 
+        var tilesetWidth = this.mapData.tilesets[0].width / this.mapData.tilesize;
         EntityWorld.instance().forEachVisibleTile(function(id, index) {
             if (!self.mapData.isHighTile(id)) {
-                self.drawTile(ctx, id, self.tilesets[0], numTilesX, self.mapData.width, index);
+                self.drawTile(ctx, id, self.mapData.tilesets[0], tilesetWidth, self.mapData.width, index);
             }
         }, 1);
     };
@@ -58,37 +63,58 @@ define(["entity/entity_world", "easeljs"], function(EntityWorld) {
 
     p.drawTile = function(ctx, tileid, tileset, setW, gridW, cellid) {
 
+        var s = this.scale;
+
         if (tileid !== -1) {    // -1 when tile is empty in Tiled. Don't attempt to draw it.
 
             this.drawScaledImage(ctx,
                                 tileset,
                                 getX(tileid+1, (setW/s)) * this.mapData.tilesize,
                                 Math.floor(tileid / (setW / s)) * this.mapData.tilesize,
-                                this.tilesize,
-                                this.tilesize,
+                                this.mapData.tilesize,
+                                this.mapData.tilesize,
                                 getX(cellid + 1, gridW) * this.mapData.tilesize,
                                 Math.floor(cellid / gridW) * this.mapData.tilesize);
 
         }
     };
 
+    var drawed = true;
     p.drawScaledImage = function(ctx, image, x, y, w, h, dx, dy) {
         var s = this.scale;
+
 
         ctx.drawImage(image,
                         x * s,
                         y * s,
                         w * s,
                         h * s,
-                        dx * this.scale,
-                        dy * this.scale,
+                        dx * this.scale + 20,
+                        dy * this.scale + 20,
                         w * this.scale,
                         h * this.scale);
 
+
+        // ctx.drawImage(image, 0, 0);
+    };
+
+    p.drawHighTiles = function(ctx) {
+        var self = this;
+        var m = this.mapData;
+        var tilesetWidth = this.mapData.tilesets[0].width / this.mapData.tilesize;
+
+        EntityWorld.instance().forEachVisibleTile(function (id, index) {
+            if(m.isHighTile(id)) {
+                self.drawTile(ctx, id, self.mapData.tilesets[0], tilesetWidth, self.mapData.width, index);
+            }
+        }, 1);
     };
 
     p.mapData = null;
 
     p.scale = 1;
+
+
+    return MapDisplayObject;
 
 });

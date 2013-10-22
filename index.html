@@ -12,11 +12,13 @@
     <div class="container">
         <div id="canvas">
 
-            <canvas id="background" width="960" height="400"></canvas>
+            <canvas id="background" width="960" height="960"></canvas>
             <canvas id="entities" width="960" height="400"></canvas>
 
         </div>
     </div>
+
+    <script src="js/lib/log.js"></script>
 
     <script src="js/lib/require.js"> </script>
 
@@ -28,8 +30,7 @@
                 "text" : "lib/text",
                 jquery: 'lib/jquery-1.10.2.min',
                 easeljs: 'lib/easeljs-0.7.0.min',
-                underscore: 'lib/underscore-min',
-                log: "lib/log"
+                underscore: 'lib/underscore-min'
             },
             shim: {
                 easeljs: {
@@ -39,9 +40,8 @@
         });
 
         require(["home"], function() {
-                    console.log("haha");
-                }
-        );
+            console.log("haha");
+        });
 
         /*
         var Person = function() {

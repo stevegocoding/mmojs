@@ -5,7 +5,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-define(["jquery", "log"], function($) {
+define(["jquery"], function($) {
 
     var MapData = function(filePath) {
         this.initialize(filePath);
@@ -118,6 +118,8 @@ define(["jquery", "log"], function($) {
                 self._checkReady();
             }
         };
+
+        return tileset;
     };
 
     p.ready = function(f) {
@@ -158,7 +160,9 @@ define(["jquery", "log"], function($) {
     };
 
     p.isHighTile = function(id) {
-        return _.indexOf(this.high, id+1) >= 0;
+        var ret = _.indexOf(this.high, id+1) >= 0;
+
+        return ret;
     };
 
 

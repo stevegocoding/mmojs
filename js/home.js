@@ -5,7 +5,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-define(["underscore", "utils", "log"], function() {
+define(["underscore", "utils"], function() {
 
     require(["main"], function() {
         console.log("main.js has been loaded!");

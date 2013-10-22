@@ -9,29 +9,32 @@
 define(["entity/component","render/map_displayobject","easeljs"],
     function(Component, MapDisplayObject) {
 
-    var MapRenderer = function(mapData) {
-        this.initialize(mapData);
-    };
+        var MapRenderer = function(mapData) {
+            this.initialize(mapData);
+        };
 
-    var super_p = Component.prototype;
-    var p = MapRenderer.prototype = Object.create(super_p);
-    p.constructor = MapRenderer;
+        var super_p = Component.prototype;
+        var p = MapRenderer.prototype = Object.create(super_p);
+        p.constructor = MapRenderer;
 
-    /** Consturctor */
-    p.initialize = function(mapData) {
-        super_p.initialize.call(this);
-        p.mapData = mapData;
-        p.mapDisplayObjecta = new MapDisplayObject(mapData);
-    };
-
-
-    /** Public Methods */
-    p.getDisplayObject = function() {
-        return this.mapDisplayObject;
-    };
+        /** Consturctor */
+        p.initialize = function(mapData) {
+            super_p.initialize.call(this);
+            this.mapData = mapData;
+            this.mapDisplayObject = new MapDisplayObject(mapData);
+        };
 
 
-    /** Properties */
-    p.mapData = null;
-    p.mapDisplayObject = null;
+        /** Public Methods */
+        p.getDisplayObject = function() {
+            return this.mapDisplayObject;
+        };
+
+
+        /** Properties */
+        p.mapData = null;
+        p.mapDisplayObject = null;
+
+        return MapRenderer;
+
 });

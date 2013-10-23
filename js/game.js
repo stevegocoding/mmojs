@@ -22,6 +22,9 @@ define(["easeljs", "entity/world_factory"],
         };
 
         p.setupStage = function(stageDOM, backgroundDOM) {
+            this.canvasDom = stageDOM;
+            this.bgCanvasDom = backgroundDOM;
+
             this.entityStage = new createjs.Stage(stageDOM);
             this.bgStage = new createjs.Stage(backgroundDOM);
 
@@ -86,6 +89,8 @@ define(["easeljs", "entity/world_factory"],
         p.stopped = false;
 
         /* Private Properties */
+        p.bgCanvasDom = null;
+        p.canvasDom = null;
 
         // easeljs stage
         p.entityStage = null;

@@ -20,7 +20,7 @@ define(["entity/entity_world", "easeljs"], function(EntityWorld) {
         super_p.initialize.call(this);
 
         this.mapData = mapData;
-        this.scale = 1;
+        this.scale = 2;
     };
 
 
@@ -69,8 +69,8 @@ define(["entity/entity_world", "easeljs"], function(EntityWorld) {
 
             this.drawScaledImage(ctx,
                                 tileset,
-                                getX(tileid+1, (setW/s)) * this.mapData.tilesize,
-                                Math.floor(tileid / (setW / s)) * this.mapData.tilesize,
+                                getX(tileid+1, (setW/1)) * this.mapData.tilesize,
+                                Math.floor(tileid / (setW/1)) * this.mapData.tilesize,
                                 this.mapData.tilesize,
                                 this.mapData.tilesize,
                                 getX(cellid + 1, gridW) * this.mapData.tilesize,
@@ -85,10 +85,10 @@ define(["entity/entity_world", "easeljs"], function(EntityWorld) {
 
 
         ctx.drawImage(image,
-                        x * s,
-                        y * s,
-                        w * s,
-                        h * s,
+                        x * 1,
+                        y * 1,
+                        w * 1,
+                        h * 1,
                         dx * this.scale + 20,
                         dy * this.scale + 20,
                         w * this.scale,
@@ -112,7 +112,7 @@ define(["entity/entity_world", "easeljs"], function(EntityWorld) {
 
     p.mapData = null;
 
-    p.scale = 1;
+    p.scale = 2;
 
 
     return MapDisplayObject;

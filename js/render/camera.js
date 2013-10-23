@@ -27,8 +27,8 @@ define(function() {
 
     p.rescale = function() {
         p.scaleFactor = 2;
-        p.gridW = 30 * p.scaleFactor;
-        p.gridH = 30 * p.scaleFactor;
+        p.gridW = 15 * p.scaleFactor;
+        p.gridH = 7 * p.scaleFactor;
     };
 
     p.setPosition = function(x, y) {

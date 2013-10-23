@@ -18,12 +18,18 @@ define(["easeljs"], function() {
 
         this.rescale(this.getScaleFactor());
 
-
         this._entities = {};
+        this._tilesize = 16;
     };
 
     p.setCamera = function(cam) {
         this.camera = cam;
+
+        this.game.canvasDom.width = this.camera.gridW * this._tilesize * this.scale ;
+        this.game.canvasDom.height = this.camera.gridH * this._tilesize * this.scale;
+
+        this.game.bgCanvasDom.width = this.game.canvasDom.width;
+        this.game.bgCanvasDom.height = this.game.canvasDom.height;
 
         this.game.entityStage.width = this.camera.gridW;
         this.game.entityStage.height = this.camera.gridH;
@@ -158,6 +164,7 @@ define(["easeljs"], function() {
     p._entities = null;
     p._map = null;
     p._mapData = null;
+    p._tilesize = 0;
 
     p.game = null;
 

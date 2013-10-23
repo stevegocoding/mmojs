@@ -53,6 +53,8 @@ define(["easeljs", "entity/world_factory"],
 
         p.start = function() {
             console.log("Game loop started.");
+
+            this.entityStage.addEventListener("stagemousedown", this.clickHandler.bind(this));
         };
 
         p.stop = function() {
@@ -79,8 +81,10 @@ define(["easeljs", "entity/world_factory"],
         /**
          * Processes game logic when the user triggers a click/touch event during the game.
          */
-        p.handleClick = function() {
-            console.log("Game -- handleClick()");
+        p.clickHandler = function(event) {
+
+            this._world.handleClick(event);
+
         };
 
 

@@ -26,6 +26,8 @@ define(["entity/entity_registry", "easeljs"], function(EntityRegistry) {
     p._enityRegistry = null;
     p.drawable = true;
 
+    /* World Position Data */
+
     /* Constructor */
     p.initialize = function(entityData) {
         // this.id = Entity._nextID++;
@@ -55,9 +57,12 @@ define(["entity/entity_registry", "easeljs"], function(EntityRegistry) {
     };
 
     p.process = function() {
-    };
 
-    p.render = function() {
+        var posComp = this.getComponent("PositionComponent");
+        if (posComp !== null) {
+            posComp.update();
+        }
+
     };
 
     p.getName = function() {
@@ -67,6 +72,22 @@ define(["entity/entity_registry", "easeljs"], function(EntityRegistry) {
     p.getComponent = function(componentName) {
         var c = EntityRegistry.GetRegistryInstance().getComponent(this._typeName, componentName);
         return c;
+    };
+
+    p.moveTo = function(x, y) {
+        var posComp = this.getComponent("PositionComponent");
+        if (posComp !== null) {
+            posComp.moveTo(x, y);
+        }
+    };
+
+    p.getGridPos = function() {
+        var posComp = this.getComponent("PositionComponent");
+        var pos;
+        if (posComp !== null)
+            pos = {x: posComp.gridX, y: posComp.gridY};
+
+        return pos;
     };
 
     return Entity;

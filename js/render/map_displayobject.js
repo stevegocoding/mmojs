@@ -63,14 +63,14 @@ define(["entity/entity_world", "easeljs"], function(EntityWorld) {
 
     p.drawTile = function(ctx, tileid, tileset, setW, gridW, cellid) {
 
-        var s = this.scale;
+        var s = 1;
 
         if (tileid !== -1) {    // -1 when tile is empty in Tiled. Don't attempt to draw it.
 
             this.drawScaledImage(ctx,
                                 tileset,
-                                getX(tileid+1, (setW/1)) * this.mapData.tilesize,
-                                Math.floor(tileid / (setW/1)) * this.mapData.tilesize,
+                                getX(tileid+1, (setW/s)) * this.mapData.tilesize,
+                                Math.floor(tileid / (setW/s)) * this.mapData.tilesize,
                                 this.mapData.tilesize,
                                 this.mapData.tilesize,
                                 getX(cellid + 1, gridW) * this.mapData.tilesize,
@@ -79,16 +79,15 @@ define(["entity/entity_world", "easeljs"], function(EntityWorld) {
         }
     };
 
-    var drawed = true;
     p.drawScaledImage = function(ctx, image, x, y, w, h, dx, dy) {
-        var s = this.scale;
+        var s = 1;
 
 
         ctx.drawImage(image,
-                        x * 1,
-                        y * 1,
-                        w * 1,
-                        h * 1,
+                        x * s,
+                        y * s,
+                        w * s,
+                        h * s,
                         dx * this.scale + 20,
                         dy * this.scale + 20,
                         w * this.scale,

@@ -10,8 +10,9 @@ define(["entity/entity_factory",
         "sprites/sprites",
         "model/entity_data",
         "model/map_data",
-        "render/camera"],
-    function(EntityFactory, EntityWorld, sprites, EntityData, MapData, Camera) {
+        "render/camera",
+        'components/navigation'],
+    function(EntityFactory, EntityWorld, sprites, EntityData, MapData, Camera, Navigation) {
 
     var WorldFactory = function(game) {
         this.initialize(game);
@@ -21,6 +22,8 @@ define(["entity/entity_factory",
 
     p.initialize = function(game) {
         this.game = game;
+
+
     };
 
     p.createCamera = function() {
@@ -48,6 +51,14 @@ define(["entity/entity_factory",
 
         var terrain = EntityFactory.createTerrain(mapData);
         world.setTerrain(terrain);
+
+        var nav = new Navigation(mapData.width, mapData.height);
+        world.setNavigator(nav);
+
+        /* Initialize the grids */
+        world.initPathingGrid();
+
+
 
         // Creat a character
         var playerData = {

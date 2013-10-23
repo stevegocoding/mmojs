@@ -5,7 +5,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-define(["easeljs"], function() {
+define(['components/navigation', "easeljs"], function(Navigation) {
 
     var EntityWorld = function(game) {
         this.initialize(game);
@@ -20,6 +20,25 @@ define(["easeljs"], function() {
 
         this._entities = {};
         this._tilesize = 16;
+        this.scale = 2;
+
+
+        this.lastClickPos = {x: 0, y: 0};
+    };
+
+    p.initPathingGrid = function() {
+        this.pathingGrid = [];
+        for(var i=0; i < this._map.height; i += 1) {
+            this.pathingGrid[i] = [];
+            for(var j=0; j < this._map.width; j += 1) {
+                this.pathingGrid[i][j] = this.map.grid[i][j];
+            }
+        }
+        log.info("Initialized the pathing grid with static colliding cells.");
+    };
+
+    p.setNavigator = function(nav) {
+        this.navigator = nav;
     };
 
     p.setCamera = function(cam) {
@@ -90,15 +109,11 @@ define(["easeljs"], function() {
         }, extra);
     };
 
-    var debug = true;
     p.forEachVisibleTile = function(callback, extra) {
         var m =  this._mapData;
 
         if (m.isLoaded) {
             this.forEachVisibleTileIndex(function(tileIndex) {
-
-                if (debug)
-                    console.log(tileIndex);
 
                 if(_.isArray(m.data[tileIndex])) {
                     _.each(m.data[tileIndex], function(id) {
@@ -114,8 +129,6 @@ define(["easeljs"], function() {
                 }
             }, extra);
         }
-
-        debug = false;
     };
 
     p.rescale = function(factor) {
@@ -141,6 +154,71 @@ define(["easeljs"], function() {
         }
 
         return scale;
+    };
+
+
+    p.handleClick = function(event) {
+        var pos = this.stagePosToGridPos(event.stageX, event.stageY);
+
+        if (pos.x === this.lastClickPos.x &&
+            pos.y === this.lastClickPos.y) {
+
+            return;
+        }
+        else {
+            this.lastClickPos = pos;
+
+            console.log("x: " + pos.x + " y: " + pos.y);
+        }
+
+    };
+
+    p.stagePosToGridPos = function(stageX, stageY) {
+        var cam = this.camera;
+        var scale = this.scale;
+        var ts = this._mapData.tilesize;
+        var offsetX = stageX % (ts * scale);
+        var offsetY = stageY % (ts * scale);
+        var x = ((stageX - offsetX) / (ts * scale)) + cam.gridX;
+        var y = ((stageY - offsetY) / (ts * scale)) + cam.gridY;
+
+        return { x: x, y: y };
+    };
+
+
+    p.moveCharacter = function(character, x, y) {
+        if (!this.map.isOutOfBounds(x, y)) {
+            character.moveTo(x, y);
+        }
+    };
+
+    /**
+     * Finds a path to a grid position for the specified character.
+     * The path will pass through any entity present in the ignore list.
+     * @param character
+     * @param x
+     * @param y
+     * @param ignoreList
+     */
+    p.findPath = function(character, x, y, ignoreList) {
+        var self = this,
+            grid = this.pathingGrid,
+            path = [];
+
+        if (this._map.isCollding(x, y)) {
+            return path;
+        }
+
+        if (this.navigator && character) {
+            var start = character.getGridPos();
+            var end = {x: x, y: y};
+            path = this.navigator.findPath(grid, start, end, false);
+        }
+        else {
+            log.error("Error while finding the path");
+        }
+
+        return path;
     };
 
     EntityWorld._instance = null;
@@ -172,6 +250,15 @@ define(["easeljs"], function() {
     p.camera = null;
     p.scale = 1.0;
     p.mobile = false;
+
+    // Mouse and Controlling
+    p.lastClickPos = null;
+
+    // Game logic
+    p.navigator = null;
+    p.entityGrid = null;
+    p.pathingGrid = null;
+    p.renderingGrid = null;
 
 
     return EntityWorld;

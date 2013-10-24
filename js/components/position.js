@@ -48,9 +48,9 @@ define(["entity/component", "components/state", 'entity/entity_world'],
             var path = EntityWorld.instance().findPath(this._owner, gridX, gridY, ignored);
             if (path.length > 1) {
                 this.path = path;
+                this.step = 0;
+                this.state.setState("moveTo", data);
             }
-
-            this.state.setState("moveTo", data);
         };
 
         /* MoveTo State */

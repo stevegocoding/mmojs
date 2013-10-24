@@ -63,6 +63,17 @@ define(["entity/entity_registry", "easeljs"], function(EntityRegistry) {
     p.processPosition = function() {
         if (this.positionComponent !== null) {
             this.positionComponent.process();
+
+            if (this.renderComponent !== null) {
+                var x = this.positionComponent.x * 2,
+                    y = this.positionComponent.y * 2;
+                this.renderComponent.getDisplayObject().setTransform(x,y);
+
+                var or = this.positionComponent.getOrientationName();
+                var state = "walk_" + or;
+                this.renderComponent.setState(state);
+
+            }
         }
     };
 

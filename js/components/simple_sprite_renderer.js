@@ -33,6 +33,10 @@ define(["entity/component", "easeljs"], function(Component) {
         this._sprite = new createjs.Sprite(this._spritesheet, defaultAnim);
     };
 
+    p.setState = function(state) {
+        this._sprite.gotoAndPlay(state);
+    };
+
     p.getDisplayObject = function() {
         return this._sprite;
     };

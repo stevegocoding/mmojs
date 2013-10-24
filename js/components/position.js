@@ -5,7 +5,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-define(["entity/component", "components/state", 'entity/entity_world', 'component/transite'],
+define(["entity/component", "components/state", 'entity/entity_world', 'components/transition', 'entity/game_types'],
     function(Component, State, EntityWorld, Transition) {
 
         var PositionComponent = function() {
@@ -133,58 +133,61 @@ define(["entity/component", "components/state", 'entity/entity_world', 'componen
 
         p.moveToProcess = function(curState) {
 
+            var self = this;
             var fps = EntityWorld.instance().fps;
-            var tick = Math.round(16 / Math.round((this.moveSpeed / (1000 / fps))));
+            var tick = Math.round(16 / Math.round((this.moveSpeed / (1000 / 50))));
             var currentTime = EntityWorld.instance().currentTime();
 
+            console.log("tick: " + tick);
+
             if (this.isMoving() && this.transition.inProgress === false) {
-                if (this.orientation === Types.orientation.LEFT) {
+                if (this.orientation === Types.Orientations.LEFT) {
                     this.transition.start(currentTime,
                                         function(x) {
-                                            this.x = x;
+                                            self.x = x;
                                         },
                                         function() {
-                                            this.x = this.transition.endValue;
-                                            this.advanceStep();
+                                            self.x = self.transition.endValue;
+                                            self.advanceStep();
                                         },
                                         this.x - tick,
                                         this.x - 16,
                                         this.moveSpeed);
                 }
-                else if (this.orientation === Types.orientation.RIGHT) {
+                else if (this.orientation === Types.Orientations.RIGHT) {
                     this.transition.start(currentTime,
                                         function(x) {
-                                            this.x = x;
+                                            self.x = x;
                                         },
                                         function() {
-                                            this.x = this.transition.endValue;
-                                            this.advanceStep();
+                                            self.x = self.transition.endValue;
+                                            self.advanceStep();
                                         },
                                         this.x + tick,
                                         this.x + 16,
                                         this.moveSpeed);
                 }
-                else if (this.orientation === Types.orientation.UP) {
+                else if (this.orientation === Types.Orientations.UP) {
                     this.transition.start(currentTime,
                                         function(y) {
-                                            this.y = y;
+                                            self.y = y;
                                         },
                                         function() {
-                                            this.y = this.transition.endValue;
-                                            this.advanceStep();
+                                            self.y = self.transition.endValue;
+                                            self.advanceStep();
                                         },
                                         this.y - tick,
                                         this.y - 16,
                                         this.moveSpeed);
                 }
-                else if (this.orientation === Types.orientation.DOWN) {
+                else if (this.orientation === Types.Orientations.DOWN) {
                     this.transition.start(currentTime,
                                         function(y) {
-                                            this.y = y;
+                                            self.y = y;
                                         },
                                         function() {
-                                            this.y = this.transition.endValue;
-                                            this.advanceStep();
+                                            self.y = self.transition.endValue;
+                                            self.advanceStep();
                                         },
                                         this.y + tick,
                                         this.y + 16,
@@ -194,6 +197,8 @@ define(["entity/component", "components/state", 'entity/entity_world', 'componen
 
 
             this.transition.step(currentTime);
+
+            console.log("position: " + this.x + " , " + this.y);
         };
 
         p.moveToExit = function(curState) {
@@ -234,6 +239,23 @@ define(["entity/component", "components/state", 'entity/entity_world', 'componen
             this.y = this.gridY * 16;
         };
 
+        p.getOrientationName = function() {
+            if (this.orientation === Types.Orientations.UP) {
+                return "north";
+            }
+            else if (this.orientation === Types.Orientations.DOWN) {
+                return "south";
+            }
+            else if (this.orientation === Types.Orientations.LEFT) {
+                return "west";
+            }
+            else if (this.orientation === Types.Orientations.RIGHT) {
+                return "east";
+            }
+
+            return "south";
+        };
+
         /* Position and Orientation */
         p.gridX = 0;
         p.gridY = 0;
@@ -243,8 +265,8 @@ define(["entity/component", "components/state", 'entity/entity_world', 'componen
         p.y = 0;
         p.transition = null;
 
-        p.orientation = 0;
-        p.moveSpeed = 1;
+        p.orientation = Types.Orientations.RIGHT;
+        p.moveSpeed = 120;
 
         // Path finding
         p.path = null;

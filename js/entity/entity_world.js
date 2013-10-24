@@ -5,7 +5,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-define(['components/navigation', "easeljs"], function(Navigation) {
+define(["easeljs"], function() {
 
     var EntityWorld = function(game) {
         this.initialize(game);
@@ -24,7 +24,7 @@ define(['components/navigation', "easeljs"], function(Navigation) {
 
         this.lastClickPos = {x: 0, y: 0};
 
-        this.fps = game.entityStage.fps;
+        this.fps = createjs.Ticker.getFPS();
     };
 
     p.initPathingGrid = function() {
@@ -169,7 +169,7 @@ define(['components/navigation', "easeljs"], function(Navigation) {
             this.lastClickPos = pos;
             this.moveCharacter(this._entities[1], pos.x, pos.y);
 
-            console.log("x: " + pos.x + " y: " + pos.y);
+            // console.log("x: " + pos.x + " y: " + pos.y);
         }
 
     };

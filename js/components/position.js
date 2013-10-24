@@ -101,7 +101,7 @@ define(["entity/component", "components/state", 'entity/entity_world', 'componen
 
                 this.updateGridPosition();
 
-                console.log("x: " + this.gridX + " y: " + this.gridY);
+                console.log("ADVANCE STEP: " + "x: " + this.gridX + " y: " + this.gridY);
 
                 if (this.hasNextStep()) {
                     this.nextGridX = this.path[this.step+1][0];
@@ -199,7 +199,7 @@ define(["entity/component", "components/state", 'entity/entity_world', 'componen
 
 
 
-            console.log("position: " + this.x + " , " + this.y);
+            // console.log("position: " + this.x + " , " + this.y);
         };
 
         p.moveToExit = function(curState) {

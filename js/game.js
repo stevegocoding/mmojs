@@ -19,6 +19,7 @@ define(["easeljs", "entity/world_factory"],
          */
         p.initialize = function() {
             this._entities = {};
+            this.mousePt = {x: 0, y: 0};
         };
 
         p.setupStage = function(stageDOM, backgroundDOM) {
@@ -54,7 +55,6 @@ define(["easeljs", "entity/world_factory"],
 
         p.start = function() {
             console.log("Game loop started.");
-
             this.entityStage.addEventListener("stagemousedown", this.clickHandler.bind(this));
         };
 

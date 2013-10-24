@@ -90,9 +90,27 @@ define(["easeljs"], function() {
     };
 
     p.update = function() {
+        this.updateCursor();
+
         for (var entityId in this._entities) {
             this._entities[entityId].process();
         }
+    };
+
+    p.updateCursor = function() {
+        var mouse = this.getMouseGridPos(),
+            x = mouse.x,
+            y = mouse.y;
+
+        this.hoveringCollidingTile = this._mapData.isCollding(x, y);
+
+
+
+        if (this.hoveringCollidingTile) {
+            this.targetColor = "rgba(255, 50, 50, 0.5)";
+        }
+        else
+            this.targetColor = "rgba(255, 255, 255, 0.5)"
     };
 
     p.setCameraView = function(ctx) {
@@ -169,7 +187,7 @@ define(["easeljs"], function() {
             this.lastClickPos = pos;
             this.moveCharacter(this._entities[1], pos.x, pos.y);
 
-            // console.log("x: " + pos.x + " y: " + pos.y);
+            console.log("CLICK: " + "x: " + pos.x + " y: " + pos.y);
         }
 
     };
@@ -184,6 +202,14 @@ define(["easeljs"], function() {
         var y = ((stageY - offsetY) / (ts * scale)) + cam.gridY;
 
         return { x: x, y: y };
+    };
+
+    p.getMouseGridPos = function() {
+
+        var mx = this.game.entityStage.mouseX;
+        var my = this.game.entityStage.mouseY;
+
+        return this.stagePosToGridPos(mx, my);
     };
 
 
@@ -260,6 +286,8 @@ define(["easeljs"], function() {
 
     // Mouse and Controlling
     p.lastClickPos = null;
+    p.hoveringCollidingTile = false;
+    p.targetColor = "rgba(255, 50, 50, 0.5)";
 
     // Game logic
     p.navigator = null;

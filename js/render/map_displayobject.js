@@ -37,6 +37,10 @@ define(["entity/entity_world", "easeljs"], function(EntityWorld) {
 
         this.drawHighTiles(ctx);
 
+        var mouseGridPos = EntityWorld.instance().getMouseGridPos();
+        var color = EntityWorld.instance().targetColor;
+        this.drawTileHighlight(ctx, mouseGridPos.x, mouseGridPos.y, color);
+
         ctx.restore();
 
     };
@@ -82,14 +86,13 @@ define(["entity/entity_world", "easeljs"], function(EntityWorld) {
     p.drawScaledImage = function(ctx, image, x, y, w, h, dx, dy) {
         var s = 1;
 
-
         ctx.drawImage(image,
                         x * s,
                         y * s,
                         w * s,
                         h * s,
-                        dx * this.scale + 20,
-                        dy * this.scale + 20,
+                        dx * this.scale,
+                        dy * this.scale,
                         w * this.scale,
                         h * this.scale);
 
@@ -107,6 +110,20 @@ define(["entity/entity_world", "easeljs"], function(EntityWorld) {
                 self.drawTile(ctx, id, self.mapData.tilesets[0], tilesetWidth, self.mapData.width, index);
             }
         }, 1);
+    };
+
+    p.drawTileHighlight = function(ctx, x, y, color) {
+        var s = this.scale,
+            ts = this.mapData.tilesize,
+            tx = x * ts * s,
+            ty = y * ts * s;
+
+        ctx.save();
+        ctx.lineWidth = 2*this.scale;
+        ctx.strokeStyle = color;
+        ctx.translate(tx+2, ty+2);
+        ctx.strokeRect(0, 0, (this.mapData.tilesize * this.scale) - 4, (this.mapData.tilesize * this.scale) - 4);
+        ctx.restore();
     };
 
     p.mapData = null;

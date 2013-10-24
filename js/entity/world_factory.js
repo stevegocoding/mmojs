@@ -47,17 +47,18 @@ define(["entity/entity_factory",
         var mapData = new MapData(mapFile);
         mapData.ready(function() {
             log.info("Map loaded!");
+
+
+            var terrain = EntityFactory.createTerrain(mapData);
+            world.setTerrain(terrain);
+
+            var nav = new Navigation(mapData.width, mapData.height);
+            world.setNavigator(nav);
+
+            /* Initialize the grids */
+            world.initPathingGrid();
+
         });
-
-        var terrain = EntityFactory.createTerrain(mapData);
-        world.setTerrain(terrain);
-
-        var nav = new Navigation(mapData.width, mapData.height);
-        world.setNavigator(nav);
-
-        /* Initialize the grids */
-        world.initPathingGrid();
-
 
 
         // Creat a character

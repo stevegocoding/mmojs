@@ -28,10 +28,10 @@ define(['components/navigation', "easeljs"], function(Navigation) {
 
     p.initPathingGrid = function() {
         this.pathingGrid = [];
-        for(var i=0; i < this._map.height; i += 1) {
+        for(var i=0; i < this._mapData.height; i += 1) {
             this.pathingGrid[i] = [];
-            for(var j=0; j < this._map.width; j += 1) {
-                this.pathingGrid[i][j] = this.map.grid[i][j];
+            for(var j=0; j < this._mapData.width; j += 1) {
+                this.pathingGrid[i][j] = this._mapData.grid[i][j];
             }
         }
         log.info("Initialized the pathing grid with static colliding cells.");
@@ -167,6 +167,7 @@ define(['components/navigation', "easeljs"], function(Navigation) {
         }
         else {
             this.lastClickPos = pos;
+            this.moveCharacter(this._entities[1], pos.x, pos.y);
 
             console.log("x: " + pos.x + " y: " + pos.y);
         }
@@ -187,7 +188,7 @@ define(['components/navigation', "easeljs"], function(Navigation) {
 
 
     p.moveCharacter = function(character, x, y) {
-        if (!this.map.isOutOfBounds(x, y)) {
+        if (!this._mapData.isOutOfBounds(x, y)) {
             character.moveTo(x, y);
         }
     };
@@ -205,13 +206,14 @@ define(['components/navigation', "easeljs"], function(Navigation) {
             grid = this.pathingGrid,
             path = [];
 
-        if (this._map.isCollding(x, y)) {
+        if (this._mapData.isCollding(x, y)) {
             return path;
         }
 
         if (this.navigator && character) {
-            var start = character.getGridPos();
-            var end = {x: x, y: y};
+            var gridPos = character.getGridPos();
+            var start = [gridPos.x, gridPos.y];
+            var end = [x, y];
             path = this.navigator.findPath(grid, start, end, false);
         }
         else {

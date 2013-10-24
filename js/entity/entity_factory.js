@@ -10,8 +10,9 @@ define(["easeljs",
         "entity/entity_registry",
         "components/simple_sprite_renderer",
         "components/map_renderer",
+        "components/position",
         "entity/game_types"],
-    function(createjs, Entity, EntityRegistry, SimpleSpriteRenderer, MapRenderer) {
+    function(createjs, Entity, EntityRegistry, SimpleSpriteRenderer, MapRenderer, PositionComponent) {
 
     var EntityFactory = function() {
 
@@ -47,6 +48,9 @@ define(["easeljs",
         var renderer = new SimpleSpriteRenderer();
         renderer.setAnimation(entityData.getDefaultLayerData(), "walk_east");
         ent.attachComponent("renderer", renderer);
+
+        var pos = new PositionComponent();
+        ent.attachComponent("PositionComponent", pos);
 
         return ent;
     };

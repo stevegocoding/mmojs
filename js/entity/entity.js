@@ -12,7 +12,7 @@ define(["entity/entity_registry", "easeljs"], function(EntityRegistry) {
         this.initialize(entityData);
     };
 
-    var p = Entity.prototype = new createjs.DisplayObject();
+    var p = Entity.prototype;
 
     Entity._nextID = 0;
 

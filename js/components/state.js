@@ -33,10 +33,12 @@ define(function() {
 
     p.assign = function(params) {
         this.id = params.id;
-        this.data = data;
         this.enterFunc = params.enterFunc;
         this.processFunc = params.processFunc;
         this.exitFunc = params.exitFunc;
+        this.data = params.data || {};
+
+        return this;
     };
 
     p.addState = function(state) {

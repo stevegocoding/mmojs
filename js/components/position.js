@@ -9,7 +9,7 @@ define(["entity/component", "components/state", 'entity/entity_world'],
     function(Component, State, EntityWorld) {
 
         var PositionComponent = function() {
-
+            this.initialize();
         };
 
         var super_p = Component.prototype;

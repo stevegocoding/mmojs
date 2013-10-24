@@ -95,8 +95,6 @@ define(['lib/astar'], function(AStar) {
     p.blankGrid = null;
     p.ignored = null;
 
-
-
-
+    return Navigation;
 
 });

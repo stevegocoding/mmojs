@@ -5,8 +5,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-define(["entity/component", "components/state", 'entity/entity_world'],
-    function(Component, State, EntityWorld) {
+define(["entity/component", "components/state", 'entity/entity_world', 'component/transite'],
+    function(Component, State, EntityWorld, Transition) {
 
         var PositionComponent = function() {
             this.initialize();
@@ -22,6 +22,8 @@ define(["entity/component", "components/state", 'entity/entity_world'],
             this.path = null;
             this.step = 0;
 
+            this.transition = new Transition();
+
             this.state = new State();
             this.state.addState((new State()).assign({id: "moveTo",
                                                     enterFunc: this.moveToEnter.bind(this),
@@ -33,6 +35,16 @@ define(["entity/component", "components/state", 'entity/entity_world'],
                                                     processFunc: this.idleProcess.bind(this),
                                                     exitFunc: this.idleExit.bind(this)}));
 
+        };
+
+        p.Component_onAttached = super_p.onAttached;
+        p.onAttached = function(entity) {
+            p.Component_onAttached(entity);
+            if (entity.positionComponent === null)
+                entity.positionComponent = this;
+            else {
+                log.error("Error in PositionComponet onAttached()!");
+            }
         };
 
         p.idle = function() {
@@ -53,11 +65,34 @@ define(["entity/component", "components/state", 'entity/entity_world'],
             }
         };
 
-        /* MoveTo State */
-        p.moveToEnter = function(curState) {
+        p.updateOrientation = function() {
+            var p = this.path;
+            var i = this.step;
+
+            if(p[i][0] < p[i-1][0]) {
+                this.orientation = Types.Orientations.LEFT;
+                if (this.orientnUpdateFunc) this.orientnUpdateFunc(this.orientation);
+            }
+            if(p[i][0] > p[i-1][0]) {
+                this.orientation = Types.Orientations.RIGHT;
+                if (this.orientnUpdateFunc) this.orientnUpdateFunc(this.orientation);
+            }
+            if(p[i][1] < p[i-1][1]) {
+                this.orientation = Types.Orientations.UP;
+                if (this.orientnUpdateFunc) this.orientnUpdateFunc(this.orientation);
+            }
+            if(p[i][1] > p[i-1][1]) {
+                this.orientation = Types.Orientations.DOWN;
+                if (this.orientnUpdateFunc) this.orientnUpdateFunc(this.orientation);
+            }
         };
 
-        p.moveToProcess = function(curState) {
+        p.updateTransition = function() {
+
+
+        };
+
+        p.advanceStep = function() {
 
             var stop = false;
 
@@ -71,11 +106,13 @@ define(["entity/component", "components/state", 'entity/entity_world'],
                     this.nextGridX = this.path[this.step+1][0];
                     this.nextGridY = this.path[this.step+1][1];
                 }
+                // Handle path changes
                 if (this.hasChangedPath()) {
 
                 }
                 else if (this.hasNextStep()) {
                     this.step += 1;
+                    this.updateOrientation();
                     if (this.stepAdvancedFunc)
                         this.stepAdvancedFunc();
                 }
@@ -88,11 +125,79 @@ define(["entity/component", "components/state", 'entity/entity_world'],
                     this.idle();
                 }
             }
+        };
 
+        /* MoveTo State */
+        p.moveToEnter = function(curState) {
+        };
+
+        p.moveToProcess = function(curState) {
+
+            var fps = EntityWorld.instance().fps;
+            var tick = Math.round(16 / Math.round((this.moveSpeed / (1000 / fps))));
+            var currentTime = EntityWorld.instance().currentTime();
+
+            if (this.isMoving() && this.transition.inProgress === false) {
+                if (this.orientation === Types.orientation.LEFT) {
+                    this.transition.start(currentTime,
+                                        function(x) {
+                                            this.x = x;
+                                        },
+                                        function() {
+                                            this.x = this.transition.endValue;
+                                            this.advanceStep();
+                                        },
+                                        this.x - tick,
+                                        this.x - 16,
+                                        this.moveSpeed);
+                }
+                else if (this.orientation === Types.orientation.RIGHT) {
+                    this.transition.start(currentTime,
+                                        function(x) {
+                                            this.x = x;
+                                        },
+                                        function() {
+                                            this.x = this.transition.endValue;
+                                            this.advanceStep();
+                                        },
+                                        this.x + tick,
+                                        this.x + 16,
+                                        this.moveSpeed);
+                }
+                else if (this.orientation === Types.orientation.UP) {
+                    this.transition.start(currentTime,
+                                        function(y) {
+                                            this.y = y;
+                                        },
+                                        function() {
+                                            this.y = this.transition.endValue;
+                                            this.advanceStep();
+                                        },
+                                        this.y - tick,
+                                        this.y - 16,
+                                        this.moveSpeed);
+                }
+                else if (this.orientation === Types.orientation.DOWN) {
+                    this.transition.start(currentTime,
+                                        function(y) {
+                                            this.y = y;
+                                        },
+                                        function() {
+                                            this.y = this.transition.endValue;
+                                            this.advanceStep();
+                                        },
+                                        this.y + tick,
+                                        this.y + 16,
+                                        this.moveSpeed);
+                }
+            }
+
+
+            this.transition.step(currentTime);
         };
 
         p.moveToExit = function(curState) {
-
+            this.transition.stop();
         };
 
         /* Idle Staet */
@@ -118,7 +223,7 @@ define(["entity/component", "components/state", 'entity/entity_world'],
             return (this.path.length - 1 > this.step);
         };
 
-        p.update = function() {
+        p.process = function() {
             this.state.process();
         };
 
@@ -136,8 +241,9 @@ define(["entity/component", "components/state", 'entity/entity_world'],
         p.nextGridY = 0;
         p.x = 0;
         p.y = 0;
+        p.transition = null;
 
-        p.orientation = "";
+        p.orientation = 0;
         p.moveSpeed = 1;
 
         // Path finding
@@ -150,6 +256,7 @@ define(["entity/component", "components/state", 'entity/entity_world'],
         p.preStepFunc = null;
         p.stepFunc = null;
         p.stepAdvancedFunc = null;
+        p.orientnUpdateFunc = null;
 
         return PositionComponent;
 });

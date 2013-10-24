@@ -18,6 +18,16 @@ define(["entity/component", "easeljs"], function(Component) {
         super_p.initialize.call(this);
     };
 
+    p.Component_onAttached = super_p.onAttached;
+    p.onAttached = function(entity) {
+        p.Component_onAttached(entity);
+        if (entity.renderComponent === null)
+            entity.renderComponent = this;
+        else {
+            log.error("Error in SimpleSpriteRenderer onAttached()!");
+        }
+    };
+
     p.setAnimation = function(spritesheetData, defaultAnim) {
         this._spritesheet = new createjs.SpriteSheet(spritesheetData);
         this._sprite = new createjs.Sprite(this._spritesheet, defaultAnim);

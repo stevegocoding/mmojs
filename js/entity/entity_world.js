@@ -22,8 +22,9 @@ define(['components/navigation', "easeljs"], function(Navigation) {
         this._tilesize = 16;
         this.scale = 2;
 
-
         this.lastClickPos = {x: 0, y: 0};
+
+        this.fps = game.entityStage.fps;
     };
 
     p.initPathingGrid = function() {
@@ -93,7 +94,6 @@ define(['components/navigation', "easeljs"], function(Navigation) {
             this._entities[entityId].process();
         }
     };
-
 
     p.setCameraView = function(ctx) {
         ctx.translate(-this.camera.x * this.scale, -this.camera.y * this.scale);
@@ -223,6 +223,10 @@ define(['components/navigation', "easeljs"], function(Navigation) {
         return path;
     };
 
+    p.currentTime = function() {
+        return createjs.Ticker.getTime();
+    };
+
     EntityWorld._instance = null;
     EntityWorld.instance = function() {
         return EntityWorld._instance;
@@ -252,6 +256,7 @@ define(['components/navigation', "easeljs"], function(Navigation) {
     p.camera = null;
     p.scale = 1.0;
     p.mobile = false;
+    p.fps = 0;
 
     // Mouse and Controlling
     p.lastClickPos = null;

@@ -27,6 +27,8 @@ define(["entity/entity_registry", "easeljs"], function(EntityRegistry) {
     p.drawable = true;
 
     /* World Position Data */
+    p.positionComponent = null;
+    p.renderComponent = null;
 
     /* Constructor */
     p.initialize = function(entityData) {
@@ -37,9 +39,7 @@ define(["entity/entity_registry", "easeljs"], function(EntityRegistry) {
         this._typeName = entityData.getTypeName();
 
         this.entityData = entityData;
-
         this._entityRegistry = EntityRegistry.GetRegistryInstance();
-
         this._entityRegistry.registerEntitity(this._typeName, null);
     };
 
@@ -57,12 +57,13 @@ define(["entity/entity_registry", "easeljs"], function(EntityRegistry) {
     };
 
     p.process = function() {
+        this.processPosition();
+    };
 
-        var posComp = this.getComponent("PositionComponent");
-        if (posComp !== null) {
-            posComp.update();
+    p.processPosition = function() {
+        if (this.positionComponent !== null) {
+            this.positionComponent.process();
         }
-
     };
 
     p.getName = function() {

@@ -28,6 +28,7 @@ define(["easeljs", "entity/world_factory"],
             this.entityStage = new createjs.Stage(stageDOM);
             this.bgStage = new createjs.Stage(backgroundDOM);
 
+            createjs.Ticker.timingMode = createjs.Ticker.RAF;
             createjs.Ticker.addEventListener("tick", this.tickHandler.bind(this));
         };
 

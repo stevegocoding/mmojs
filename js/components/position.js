@@ -62,6 +62,7 @@ define(["entity/component", "components/state", 'entity/entity_world', 'componen
                 this.path = path;
                 this.step = 0;
                 this.state.setState("moveTo", data);
+                this.advanceStep();
             }
         };
 
@@ -135,7 +136,7 @@ define(["entity/component", "components/state", 'entity/entity_world', 'componen
 
             var self = this;
             var fps = EntityWorld.instance().fps;
-            var tick = Math.round(16 / Math.round((this.moveSpeed / (1000 / 50))));
+            var tick = Math.round(16 / Math.round((this.moveSpeed / (1000 / 60))));
             var currentTime = EntityWorld.instance().currentTime();
 
             console.log("tick: " + tick);
@@ -196,7 +197,7 @@ define(["entity/component", "components/state", 'entity/entity_world', 'componen
             }
 
 
-            this.transition.step(currentTime);
+
 
             console.log("position: " + this.x + " , " + this.y);
         };
@@ -230,6 +231,11 @@ define(["entity/component", "components/state", 'entity/entity_world', 'componen
 
         p.process = function() {
             this.state.process();
+
+            if (this.transition.inProgress) {
+                var currentTime = EntityWorld.instance().currentTime();
+                this.transition.step(currentTime);
+            }
         };
 
         p.updateGridPosition = function() {

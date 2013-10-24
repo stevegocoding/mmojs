@@ -5,8 +5,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-define(["easeljs", "entity/world_factory"],
-    function(createjs, WorldFactory) {
+define(["easeljs", "entity/world_factory", "render/stage"],
+    function(createjs, WorldFactory, GameStage) {
 
         var Game = function() {
             this.initialize();
@@ -26,8 +26,8 @@ define(["easeljs", "entity/world_factory"],
             this.canvasDom = stageDOM;
             this.bgCanvasDom = backgroundDOM;
 
-            this.entityStage = new createjs.Stage(stageDOM);
-            this.bgStage = new createjs.Stage(backgroundDOM);
+            this.entityStage = new GameStage(stageDOM);
+            this.bgStage = new GameStage(backgroundDOM);
 
             createjs.Ticker.timingMode = createjs.Ticker.RAF;
             createjs.Ticker.addEventListener("tick", this.tickHandler.bind(this));

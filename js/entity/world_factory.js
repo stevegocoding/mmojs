@@ -22,12 +22,10 @@ define(["entity/entity_factory",
 
     p.initialize = function(game) {
         this.game = game;
-
-
     };
 
-    p.createCamera = function() {
-        var cam = new Camera();
+    p.createCamera = function(world) {
+        var cam = new Camera(world);
         cam.rescale();
         return cam;
     };
@@ -38,7 +36,8 @@ define(["entity/entity_factory",
         EntityWorld._instance = world;
 
         // Set camera
-        var cam = this.createCamera();
+        var cam = this.createCamera(world);
+        cam.setGridPosition(7,10);
         world.setCamera(cam);
 
         // Create Map

@@ -41,7 +41,7 @@ define(["jquery"], function($) {
 
         var tileset1;
         this.tilesetCount = 1;
-        tileset1 = this._loadTileset('assets/images/tilesheet.png');
+        tileset1 = this._loadTileset('assets/images/tilesheetx2.png');
 
         this.tilesets = [tileset1];
     };

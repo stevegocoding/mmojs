@@ -8,27 +8,30 @@
 
 define(function() {
 
-    var Camera = function() {
-        this.initialize();
+    var Camera = function(world) {
+        this.initialize(world);
     };
 
     var p = Camera.prototype;
 
-    p.initialize = function() {
+    p.initialize = function(world) {
 
-        p.x = 0;
-        p.y = 0;
-        p.gridX = 0;
-        p.gridY = 0;
-        p.offset = 0.5;
+        this.world = world;
+        this.x = 0;
+        this.y = 0;
+        this.gridX = 0;
+        this.gridY = 0;
+        this.offset = 0.5;
 
         this.rescale();
     };
 
     p.rescale = function() {
-        p.scaleFactor = 2;
-        p.gridW = 15 * p.scaleFactor;
-        p.gridH = 7 * p.scaleFactor;
+
+        var factor = this.world.mobile? 1 : 2;
+
+        this.gridW = 15 * factor;
+        this.gridH = 7 * factor;
     };
 
     p.setPosition = function(x, y) {
@@ -62,10 +65,10 @@ define(function() {
     p.gridY = 0;
     p.offset = 0.5;
 
-    p.scaleFactor = 1;
-
     p.gridW = 0;
     p.gridH = 0;
+
+    p.world = null;
 
     return Camera;
 });

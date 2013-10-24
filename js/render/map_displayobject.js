@@ -20,7 +20,6 @@ define(["entity/entity_world", "easeljs"], function(EntityWorld) {
         super_p.initialize.call(this);
 
         this.mapData = mapData;
-        this.scale = 2;
     };
 
 
@@ -67,7 +66,7 @@ define(["entity/entity_world", "easeljs"], function(EntityWorld) {
 
     p.drawTile = function(ctx, tileid, tileset, setW, gridW, cellid) {
 
-        var s = 1;
+        var s = EntityWorld.instance().scale;
 
         if (tileid !== -1) {    // -1 when tile is empty in Tiled. Don't attempt to draw it.
 
@@ -84,20 +83,18 @@ define(["entity/entity_world", "easeljs"], function(EntityWorld) {
     };
 
     p.drawScaledImage = function(ctx, image, x, y, w, h, dx, dy) {
-        var s = 1;
+
+        var s = EntityWorld.instance().scale;
 
         ctx.drawImage(image,
                         x * s,
                         y * s,
                         w * s,
                         h * s,
-                        dx * this.scale,
-                        dy * this.scale,
-                        w * this.scale,
-                        h * this.scale);
-
-
-        // ctx.drawImage(image, 0, 0);
+                        dx * s,
+                        dy * s,
+                        w * s,
+                        h * s);
     };
 
     p.drawHighTiles = function(ctx) {
@@ -113,23 +110,20 @@ define(["entity/entity_world", "easeljs"], function(EntityWorld) {
     };
 
     p.drawTileHighlight = function(ctx, x, y, color) {
-        var s = this.scale,
+        var s = EntityWorld.instance().scale,
             ts = this.mapData.tilesize,
             tx = x * ts * s,
             ty = y * ts * s;
 
         ctx.save();
-        ctx.lineWidth = 2*this.scale;
+        ctx.lineWidth = 2 * s;
         ctx.strokeStyle = color;
         ctx.translate(tx+2, ty+2);
-        ctx.strokeRect(0, 0, (this.mapData.tilesize * this.scale) - 4, (this.mapData.tilesize * this.scale) - 4);
+        ctx.strokeRect(0, 0, (this.mapData.tilesize * s) - 4, (this.mapData.tilesize * s) - 4);
         ctx.restore();
     };
 
     p.mapData = null;
-
-    p.scale = 2;
-
 
     return MapDisplayObject;
 

@@ -16,15 +16,19 @@ define(["easeljs"], function() {
     p.initialize = function(game) {
         this.game = game;
 
+        /* Init Rendering Parameters */
+        var ctx = this.game.entityStage.canvas.getContext("2d");
+        this.upscaledRendering = ctx.mozImageSmoothingEnabled !== undefined;
+
         this.rescale(this.getScaleFactor());
 
         this._entities = {};
         this._tilesize = 16;
-        this.scale = 2;
 
         this.lastClickPos = {x: 0, y: 0};
 
         this.fps = createjs.Ticker.getFPS();
+
     };
 
     p.initPathingGrid = function() {
@@ -113,10 +117,6 @@ define(["easeljs"], function() {
             this.targetColor = "rgba(255, 255, 255, 0.5)"
     };
 
-    p.setCameraView = function(ctx) {
-        ctx.translate(-this.camera.x * this.scale, -this.camera.y * this.scale);
-    };
-
     p.forEachVisibleTileIndex = function(callback, extra) {
         var m = this._mapData;
 
@@ -150,7 +150,7 @@ define(["easeljs"], function() {
     };
 
     p.rescale = function(factor) {
-        this.scale = this.getScaleFactor();
+        this.scale = factor;
     };
 
     p.getScaleFactor = function() {
@@ -176,7 +176,7 @@ define(["easeljs"], function() {
 
 
     p.handleClick = function(event) {
-        var pos = this.stagePosToGridPos(event.stageX, event.stageY);
+        var pos = this.getMouseGridPos();
 
         if (pos.x === this.lastClickPos.x &&
             pos.y === this.lastClickPos.y) {
@@ -194,12 +194,12 @@ define(["easeljs"], function() {
 
     p.stagePosToGridPos = function(stageX, stageY) {
         var cam = this.camera;
-        var scale = this.scale;
+        var s = this.scale;
         var ts = this._mapData.tilesize;
-        var offsetX = stageX % (ts * scale);
-        var offsetY = stageY % (ts * scale);
-        var x = ((stageX - offsetX) / (ts * scale)) + cam.gridX;
-        var y = ((stageY - offsetY) / (ts * scale)) + cam.gridY;
+        var offsetX = stageX % (ts * s);
+        var offsetY = stageY % (ts * s);
+        var x = ((stageX - offsetX) / (ts * s)) + cam.gridX;
+        var y = ((stageY - offsetY) / (ts * s)) + cam.gridY;
 
         return { x: x, y: y };
     };
@@ -279,8 +279,9 @@ define(["easeljs"], function() {
     p.game = null;
 
     // Rendering parameters
+    p.upscaledRendering = false;
     p.camera = null;
-    p.scale = 1.0;
+    p.scale = 2;
     p.mobile = false;
     p.fps = 0;
 

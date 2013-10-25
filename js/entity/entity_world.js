@@ -91,6 +91,7 @@ define(["easeljs"], function() {
 
     p.setPlayerEntity = function(entity) {
         this._playerEntity = entity;
+        this.camera.lookAt(entity.positionComponent.x, entity.positionComponent.y);
     };
 
     p.removeEntity = function(entity) {

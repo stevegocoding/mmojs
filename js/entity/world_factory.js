@@ -27,9 +27,25 @@ define(['entity/api',
         API.RegisterAPI(Types.Entities.WARRIOR, "onMoved",
             function(entity, params) {
 
-                var cam = EntityWorld.instance().camera;
+                if (entity === EntityWorld.instance()._playerEntity) {
+                    var cam = EntityWorld.instance().camera;
+                    cam.lookAt(params.x, params.y);
+                }
 
-                cam.lookAt(params.x, params.y);
+                if (entity.renderComponent !== null) {
+                    var s = EntityWorld.instance().scale;
+                    var x = entity.positionComponent.x * s,
+                        y = entity.positionComponent.y * s;
+                    entity.renderComponent.setPosition(x, y);
+                }
+
+            });
+
+        API.RegisterAPI(Types.Entities.WARRIOR, "onUpdateOrientation",
+            function(entity, params) {
+                var or = entity.positionComponent.getOrientationName();
+                var state = "walk_" + or;
+                entity.renderComponent.setState(state);
             });
     };
 
@@ -46,7 +62,6 @@ define(['entity/api',
 
         // Set camera
         var cam = this.createCamera(world);
-        cam.setGridPosition(7,10);
         world.setCamera(cam);
 
         // Create Map
@@ -55,7 +70,6 @@ define(['entity/api',
         var mapData = new MapData(mapFile);
         mapData.ready(function() {
             log.info("Map loaded!");
-
 
             var terrain = EntityFactory.createTerrain(mapData);
             world.setTerrain(terrain);

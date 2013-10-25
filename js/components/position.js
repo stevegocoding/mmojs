@@ -75,21 +75,24 @@ define(['entity/component',
             var p = this.path;
             var i = this.step;
 
+            var old = this.orientation;
+            var n;
             if(p[i][0] < p[i-1][0]) {
-                this.orientation = Types.Orientations.LEFT;
-                if (this.orientnUpdateFunc) this.orientnUpdateFunc(this.orientation);
+                n = Types.Orientations.LEFT;
             }
             if(p[i][0] > p[i-1][0]) {
-                this.orientation = Types.Orientations.RIGHT;
-                if (this.orientnUpdateFunc) this.orientnUpdateFunc(this.orientation);
+                n = Types.Orientations.RIGHT;
             }
             if(p[i][1] < p[i-1][1]) {
-                this.orientation = Types.Orientations.UP;
-                if (this.orientnUpdateFunc) this.orientnUpdateFunc(this.orientation);
+                n = Types.Orientations.UP;
             }
             if(p[i][1] > p[i-1][1]) {
-                this.orientation = Types.Orientations.DOWN;
-                if (this.orientnUpdateFunc) this.orientnUpdateFunc(this.orientation);
+                n = Types.Orientations.DOWN;
+            }
+
+            if (n !== old){
+                this.orientation = n;
+                this.onUpdateOrientation();
             }
         };
 
@@ -151,11 +154,11 @@ define(['entity/component',
                     this.transition.start(currentTime,
                                         function(x) {
                                             self.x = x;
-                                            //self.onMoved();
+                                            self.onMoved();
                                         },
                                         function() {
                                             self.x = self.transition.endValue;
-                                            //self.onMoved();
+                                            self.onMoved();
                                             self.advanceStep();
                                         },
                                         this.x - tick,
@@ -166,11 +169,11 @@ define(['entity/component',
                     this.transition.start(currentTime,
                                         function(x) {
                                             self.x = x;
-                                            //self.onMoved();
+                                            self.onMoved();
                                         },
                                         function() {
                                             self.x = self.transition.endValue;
-                                            //self.onMoved();
+                                            self.onMoved();
                                             self.advanceStep();
                                         },
                                         this.x + tick,
@@ -181,11 +184,11 @@ define(['entity/component',
                     this.transition.start(currentTime,
                                         function(y) {
                                             self.y = y;
-                                            //self.onMoved();
+                                            self.onMoved();
                                         },
                                         function() {
                                             self.y = self.transition.endValue;
-                                            //self.onMoved();
+                                            self.onMoved();
                                             self.advanceStep();
                                         },
                                         this.y - tick,
@@ -196,11 +199,11 @@ define(['entity/component',
                     this.transition.start(currentTime,
                                         function(y) {
                                             self.y = y;
-                                            //self.onMoved();
+                                            self.onMoved();
                                         },
                                         function() {
                                             self.y = self.transition.endValue;
-                                            //self.onMoved();
+                                            self.onMoved();
                                             self.advanceStep();
                                         },
                                         this.y + tick,
@@ -209,7 +212,7 @@ define(['entity/component',
                 }
             }
 
-            self.onMoved();
+            //self.onMoved();
 
             // console.log("position: " + this.x + " , " + this.y);
         };
@@ -276,6 +279,11 @@ define(['entity/component',
 
         p.onMoved = function() {
             API.SendMessage(this._owner.type, this._owner.id, "onMoved", {x: this.x, y: this.y});
+        };
+
+        p.onUpdateOrientation = function() {
+            API.SendMessage(this._owner.type, this._owner.id, "onUpdateOrientation", {orientation: this.orientation});
+
         };
 
         /* Position and Orientation */

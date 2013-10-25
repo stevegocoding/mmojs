@@ -50,10 +50,7 @@ define(["easeljs",
         ent.attachComponent("renderer", renderer);
 
         var pos = new PositionComponent();
-        pos.x = 10*16;
-        pos.y = 10*16;
-        pos.gridX = 10;
-        pos.gridY = 10;
+        pos.setGridPosition(20, 20);
         ent.attachComponent("PositionComponent", pos);
 
         return ent;

@@ -42,6 +42,13 @@ define(['entity/component',
 
         };
 
+        p.setGridPosition = function(gridX, gridY) {
+            this.gridX = gridX;
+            this.gridY = gridY;
+            this.x = this.gridX * 16;
+            this.y = this.gridY * 16;
+        };
+
         p.Component_onAttached = super_p.onAttached;
         p.onAttached = function(entity) {
             p.Component_onAttached(entity);
@@ -107,7 +114,8 @@ define(['entity/component',
 
             if (this.isMoving()) {
 
-                this.updateGridPosition();
+                //this.updateGridPosition();
+                this.setGridPosition(this.path[this.step][0], this.path[this.step][1]);
 
                 console.log("ADVANCE STEP: " + "x: " + this.gridX + " y: " + this.gridY);
 

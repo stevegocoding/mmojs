@@ -6,8 +6,8 @@
  */
 
 
-define(["entity/component","render/map_displayobject","easeljs"],
-    function(Component, MapDisplayObject) {
+define(["entity/component","render/map_displayobject", 'render/dynamic_map', "easeljs"],
+    function(Component, MapDisplayObject, DynamicMapDisplayObject) {
 
         var MapRenderer = function(mapData) {
             this.initialize(mapData);
@@ -22,6 +22,7 @@ define(["entity/component","render/map_displayobject","easeljs"],
             super_p.initialize.call(this);
             this.mapData = mapData;
             this.mapDisplayObject = new MapDisplayObject(mapData);
+            this.dynamicMap = new DynamicMapDisplayObject(mapData);
         };
 
 
@@ -30,10 +31,15 @@ define(["entity/component","render/map_displayobject","easeljs"],
             return this.mapDisplayObject;
         };
 
+        p.getDynamicMapDisplayObject = function() {
+            return this.dynamicMap;
+        };
+
 
         /** Properties */
         p.mapData = null;
         p.mapDisplayObject = null;
+        p.dynamicMap = null;
 
         return MapRenderer;
 

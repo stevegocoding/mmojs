@@ -5,7 +5,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-define(function() {
+define(['utils'], function() {
 
     var App = function(game) {
         this.initialize(game);
@@ -14,6 +14,8 @@ define(function() {
     var p = App.prototype;
 
     p.initialize = function(game) {
+
+        pub.disableLogger();
         this.game = game;
     };
 

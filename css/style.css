@@ -62,19 +62,14 @@ footer, header, hgroup, menu, nav, section {
 
 
 /* General Stylings */
-body {padding:0;margin:0;/*background:#111;*/overflow:hidden;image-rendering:-moz-crisp-edges; image-rendering:-webkit-optimize-contrast;border-top:2px solid #707070;}
-
-canvas {background-color: transparent;}
+body {padding:0;margin:0;background:#111;overflow:hidden;border-top:2px solid #707070;}
 
 /*#background { background:url('../assets/images/common/loading.png') no-repeat center center, #000;}*/
 /*#background { margin:0; padding:0;} */
 
+#container {width:980px;margin:0 auto;position:absolute;top:50%;margin-top:-252px;left:50%;margin-left:-490px;}
+#canvas {width:100%;height:448px;}
+/* #canvasborder {background:url('../assets/images/common/border.png') no-repeat;} */
 
-#container {
-    width:980px;
-    margin:0 auto;
-    position:absolute;
-}
-#canvasborder {background:url('../assets/images/common/border.png') no-repeat;}
-#background {position: absolute; left: 0; top: 0; z-index: 0;}
-#entities {position: absolute; left: 0; top: 0; z-index: 1;}
+#background {position: absolute; z-index: 0;}
+#entities {position: absolute; z-index: 1;}

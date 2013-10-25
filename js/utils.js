@@ -31,3 +31,20 @@
                 window.setTimeout(callback, 1000 / 60);
             };
     })();
+
+var oldConsoleLog = null;
+var pub = {};
+
+pub.enableLogger =  function enableLogger()
+{
+    if(oldConsoleLog == null)
+        return;
+
+    window['console']['log'] = oldConsoleLog;
+};
+
+pub.disableLogger = function disableLogger()
+{
+    oldConsoleLog = console.log;
+    window['console']['log'] = function() {};
+};

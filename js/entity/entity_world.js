@@ -69,7 +69,19 @@ define(["easeljs"], function() {
             if (entity.drawable)
             {
                 var renderer = entity.getComponent("renderer");
-                this.game.entityStage.addChild(renderer.getDisplayObject());
+                var idx = this.game.entityStage.getNumChildren() - 2;
+                if (idx < 0)
+                    this.game.entityStage.addChildAt(renderer.getDisplayObject(), 0);
+                else
+                    this.game.entityStage.addChildAt(renderer.getDisplayObject(), idx);
+
+                /*
+                if (this.game.entityStage.getNumChildren() >= 2 ) {
+                    var idx1 = this.game.entityStage.getNumChildren() - 2;
+                    var idx2 = idx1 + 1;
+                    this.game.entityStage.swapChildrenAt(idx1, idx2);
+                }
+                */
             }
         }
         else {
@@ -84,6 +96,8 @@ define(["easeljs"], function() {
 
             var renderer = mapEntity.getComponent("renderer");
             this.game.bgStage.addChild(renderer.getDisplayObject());
+
+            this.game.entityStage.addChild(renderer.getDynamicMapDisplayObject());
         }
         else
             throw Error("The terrain has already been set!");

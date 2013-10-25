@@ -34,7 +34,7 @@ define(["entity/entity_world", "easeljs"], function(EntityWorld) {
 
         this.drawMap(ctx);
 
-        this.drawHighTiles(ctx);
+        // this.drawHighTiles(ctx);
 
         var mouseGridPos = EntityWorld.instance().getMouseGridPos();
         var color = EntityWorld.instance().targetColor;

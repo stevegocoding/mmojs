@@ -65,12 +65,6 @@ define(["easeljs"], function() {
     p.addEntity = function(entity) {
         if (this._entities[entity.id] === undefined) {
             this._entities[entity.id] = entity;
-
-            if (entity.drawable)
-            {
-                var renderer = entity.getComponent("renderer");
-                this.game.entityStage.addChild(renderer.getDisplayObject());
-            }
         }
         else {
             console.log("The entity already existed! " + entity.id);
@@ -81,9 +75,6 @@ define(["easeljs"], function() {
         if (this._map === null) {
             this._map = mapEntity;
             this._mapData = mapEntity.entityData;
-
-            var renderer = mapEntity.getComponent("renderer");
-            this.game.bgStage.addChild(renderer.getDisplayObject());
         }
         else
             throw Error("The terrain has already been set!");

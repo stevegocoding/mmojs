@@ -45,8 +45,10 @@ define(['entity/api', 'entity/component', 'easeljs'], function(API, Component) {
         this.y = y;
     };
 
-    p.getDisplayObject = function() {
-        return this._sprite;
+    p.draw = function(ctx) {
+        if (this._sprite !== null) {
+            this._sprite.draw(ctx);
+        }
     };
 
     p.onRender = function(event) {

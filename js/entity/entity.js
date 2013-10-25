@@ -52,6 +52,14 @@ define(["entity/entity_registry", "easeljs"], function(EntityRegistry) {
 
     };
 
+    p.render = function(ctx) {
+
+        if (this.renderComponent !== null) {
+            this.renderComponent.draw(ctx);
+        }
+
+    };
+
     p.process = function() {
         this.processPosition();
     };

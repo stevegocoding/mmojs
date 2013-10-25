@@ -24,10 +24,8 @@ define(["entity/component","render/map_displayobject","easeljs"],
             this.mapDisplayObject = new MapDisplayObject(mapData);
         };
 
+        p.draw = function(ctx) {
 
-        /** Public Methods */
-        p.getDisplayObject = function() {
-            return this.mapDisplayObject;
         };
 
 

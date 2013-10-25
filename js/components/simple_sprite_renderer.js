@@ -50,6 +50,7 @@ define(['entity/api', 'entity/component', 'easeljs'], function(API, Component) {
     };
 
     p.onRender = function(event) {
+        API.SendMessage(this._owner.type, this._owner.id, "onPreRender");
         this._sprite.setTransform(this.x-16, this.y-40);
     };
 

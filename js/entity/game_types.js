@@ -95,7 +95,10 @@ Types = {
         GOLDENSWORD: 63,
         MORNINGSTAR: 64,
         AXE: 65,
-        BLUESWORD: 66
+        BLUESWORD: 66,
+
+
+        ENTITY: 255
     },
 
     Orientations: {

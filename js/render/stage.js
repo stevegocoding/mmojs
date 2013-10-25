@@ -6,7 +6,7 @@
  */
 
 
-define(['easeljs'], function() {
+define(['entity/entity_world', 'easeljs'], function(EntityWorld) {
 
     var GameStage = function(dom) {
         this.initialize(dom);
@@ -22,14 +22,15 @@ define(['easeljs'], function() {
 
     p.Stage_updateContext = super_p.updateContext;
     p.updateContext = function(ctx) {
+        this.Stage_updateContext(ctx);
+        this.applyCameraTransform(ctx);
+    };
 
-        p.Stage_updateContext(ctx);
-
-
-        var dx = 7;
-        var dy = 10;
-        ctx.translate(-16 * dx * 2, -16 * dy * 2);
-
+    p.applyCameraTransform = function(ctx) {
+        var s = EntityWorld.instance().scale,
+            dx = EntityWorld.instance().camera.x,
+            dy = EntityWorld.instance().camera.y;
+        ctx.translate(-dx*s, -dy*s);
     };
 
     return GameStage;

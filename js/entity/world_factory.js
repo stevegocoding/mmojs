@@ -5,14 +5,15 @@
  * To change this template use File | Settings | File Templates.
  */
 
-define(["entity/entity_factory",
+define(['entity/api',
+        "entity/entity_factory",
         "entity/entity_world",
         "sprites/sprites",
         "model/entity_data",
         "model/map_data",
         "render/camera",
         'components/navigation'],
-    function(EntityFactory, EntityWorld, sprites, EntityData, MapData, Camera, Navigation) {
+    function(API, EntityFactory, EntityWorld, sprites, EntityData, MapData, Camera, Navigation) {
 
     var WorldFactory = function(game) {
         this.initialize(game);
@@ -22,6 +23,14 @@ define(["entity/entity_factory",
 
     p.initialize = function(game) {
         this.game = game;
+
+        API.RegisterAPI(Types.Entities.WARRIOR, "onMoved",
+            function(entity, params) {
+
+                var cam = EntityWorld.instance().camera;
+
+                cam.lookAt(params.x, params.y);
+            });
     };
 
     p.createCamera = function(world) {
@@ -64,11 +73,12 @@ define(["entity/entity_factory",
         var playerData = {
             "id": 1,
             "name": "Steve",
-            "type": "Warrior",
+            "type": Types.Entities.WARRIOR,
             "default_layer": sprites["princess"]
         };
         var player = EntityFactory.createEntity(Types.Entities.WARRIOR, new EntityData(playerData));
         world.addEntity(player);
+        world.setPlayerEntity(player);
 
         return world;
     };

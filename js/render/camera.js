@@ -50,6 +50,14 @@ define(function() {
         this.y = this.gridY * 16;
     };
 
+    p.lookAt = function(targetX, targetY) {
+        var ts = this.world._tilesize,
+            x = Math.round( targetX - (Math.floor(this.gridW / 2) * ts) ),
+            y = Math.round( targetY - (Math.floor(this.gridH / 2) * ts) );
+
+        this.setPosition(x, y);
+    };
+
     p.forEachVisiblePosition = function(callback, extra) {
         var extra = extra || 0;
         for(var y=this.gridY-extra, maxY=this.gridY+this.gridH+(extra*2); y < maxY; y += 1) {

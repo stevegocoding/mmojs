@@ -5,8 +5,13 @@
  * To change this template use File | Settings | File Templates.
  */
 
-define(["entity/component", "components/state", 'entity/entity_world', 'components/transition', 'entity/game_types'],
-    function(Component, State, EntityWorld, Transition) {
+define(['entity/component',
+        'components/state',
+        'entity/entity_world',
+        'components/transition',
+        'entity/api',
+        'entity/game_types'],
+    function(Component, State, EntityWorld, Transition, API) {
 
         var PositionComponent = function() {
             this.initialize();
@@ -146,9 +151,11 @@ define(["entity/component", "components/state", 'entity/entity_world', 'componen
                     this.transition.start(currentTime,
                                         function(x) {
                                             self.x = x;
+                                            //self.onMoved();
                                         },
                                         function() {
                                             self.x = self.transition.endValue;
+                                            //self.onMoved();
                                             self.advanceStep();
                                         },
                                         this.x - tick,
@@ -159,9 +166,11 @@ define(["entity/component", "components/state", 'entity/entity_world', 'componen
                     this.transition.start(currentTime,
                                         function(x) {
                                             self.x = x;
+                                            //self.onMoved();
                                         },
                                         function() {
                                             self.x = self.transition.endValue;
+                                            //self.onMoved();
                                             self.advanceStep();
                                         },
                                         this.x + tick,
@@ -172,9 +181,11 @@ define(["entity/component", "components/state", 'entity/entity_world', 'componen
                     this.transition.start(currentTime,
                                         function(y) {
                                             self.y = y;
+                                            //self.onMoved();
                                         },
                                         function() {
                                             self.y = self.transition.endValue;
+                                            //self.onMoved();
                                             self.advanceStep();
                                         },
                                         this.y - tick,
@@ -185,9 +196,11 @@ define(["entity/component", "components/state", 'entity/entity_world', 'componen
                     this.transition.start(currentTime,
                                         function(y) {
                                             self.y = y;
+                                            //self.onMoved();
                                         },
                                         function() {
                                             self.y = self.transition.endValue;
+                                            //self.onMoved();
                                             self.advanceStep();
                                         },
                                         this.y + tick,
@@ -196,8 +209,7 @@ define(["entity/component", "components/state", 'entity/entity_world', 'componen
                 }
             }
 
-
-
+            self.onMoved();
 
             // console.log("position: " + this.x + " , " + this.y);
         };
@@ -262,6 +274,10 @@ define(["entity/component", "components/state", 'entity/entity_world', 'componen
             return "south";
         };
 
+        p.onMoved = function() {
+            API.SendMessage(this._owner.type, this._owner.id, "onMoved", {x: this.x, y: this.y});
+        };
+
         /* Position and Orientation */
         p.gridX = 0;
         p.gridY = 0;
@@ -285,6 +301,7 @@ define(["entity/component", "components/state", 'entity/entity_world', 'componen
         p.stepFunc = null;
         p.stepAdvancedFunc = null;
         p.orientnUpdateFunc = null;
+        p.movedFunc = null;
 
         return PositionComponent;
 });

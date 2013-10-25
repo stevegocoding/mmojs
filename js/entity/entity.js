@@ -14,40 +14,36 @@ define(["entity/entity_registry", "easeljs"], function(EntityRegistry) {
 
     var p = Entity.prototype;
 
-    Entity._nextID = 0;
-
     /* Private Properties */
     p.id = -1;
-    p._name = "default_entity";
-    p._typeName = "default_type";
-
+    p.type = -1;
+    p.name = "default";
     p.entityData = null;
 
     p._enityRegistry = null;
     p.drawable = true;
 
-    /* World Position Data */
+    /* Default Components  */
     p.positionComponent = null;
     p.renderComponent = null;
 
     /* Constructor */
     p.initialize = function(entityData) {
-        // this.id = Entity._nextID++;
-
-        this.id = entityData.getId();
-        this._name = entityData.getName();
-        this._typeName = entityData.getTypeName();
-
         this.entityData = entityData;
+
+        this.id = entityData.id;
+        this.type = entityData.type;
+        this.name = entityData.name;
+
         this._entityRegistry = EntityRegistry.GetRegistryInstance();
-        this._entityRegistry.registerEntitity(this._typeName, null);
+        this._entityRegistry.registerEntitity(this.entityData.type, null);
     };
 
     /* Public Methods */
     p.attachComponent = function(name, component) {
         var compRegistry = {};
         compRegistry[name] = component;
-        this._entityRegistry.addComponent(this._typeName, compRegistry);
+        this._entityRegistry.addComponent(this.entityData.type, compRegistry);
 
         component.onAttached(this);
     };
@@ -82,7 +78,7 @@ define(["entity/entity_registry", "easeljs"], function(EntityRegistry) {
     };
 
     p.getComponent = function(componentName) {
-        var c = EntityRegistry.GetRegistryInstance().getComponent(this._typeName, componentName);
+        var c = EntityRegistry.GetRegistryInstance().getComponent(this.entityData.type, componentName);
         return c;
     };
 

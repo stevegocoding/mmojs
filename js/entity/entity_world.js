@@ -89,6 +89,10 @@ define(["easeljs"], function() {
             throw Error("The terrain has already been set!");
     };
 
+    p.setPlayerEntity = function(entity) {
+        this._playerEntity = entity;
+    };
+
     p.removeEntity = function(entity) {
 
     };
@@ -185,7 +189,7 @@ define(["easeljs"], function() {
         }
         else {
             this.lastClickPos = pos;
-            this.moveCharacter(this._entities[1], pos.x, pos.y);
+            this.moveCharacter(this._playerEntity, pos.x, pos.y);
 
             console.log("CLICK: " + "x: " + pos.x + " y: " + pos.y);
         }

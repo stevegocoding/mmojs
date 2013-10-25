@@ -22,9 +22,10 @@ define( function() {
             // @TODO: throw an exception
         }
 
-        this._id = data["id"];
-        this._name = data["name"];
-        this._typeName = data["type"];
+        this.id = data["id"];
+        this.name = data["name"];
+        this.type = data["type"];
+        
         this._defaultSpritesheetLayerData = data["default_layer"];
         var imagesPath = "assets/images/"+ this._defaultSpritesheetLayerData.id + ".png";
         this._defaultSpritesheetLayerData["images"] = [imagesPath];
@@ -34,27 +35,11 @@ define( function() {
         return this._defaultSpritesheetLayerData;
     };
 
-    p.getId = function() {
-        return this._id;
-    };
-
-    p.getName = function() {
-        return this._name;
-    };
-
-    p.getTypeName = function() {
-        return this._typeName;
-    };
-
     /* Private Properties */
     p._defaultSpritesheetLayerData = null;
-
-    p._id = -1;
-
-    p._name = "default_name";
-
-    p._typeName = "default_type";
-
+    p.id = -1;
+    p.name = "default_name";
+    p.type = -1;
 
     return EntityData;
 });

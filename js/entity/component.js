@@ -25,7 +25,7 @@ define(function() {
         else
         {
             // @TODO: Should throw an exception.
-            log.error("Error in Component onAttached()! ");
+            console.error("Error in Component onAttached()! ");
         }
     };
 

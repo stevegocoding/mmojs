@@ -24,7 +24,7 @@ define(['entity/api', 'entity/component', 'easeljs'], function(API, Component) {
         if (entity.renderComponent === null)
             entity.renderComponent = this;
         else {
-            log.error("Error in SimpleSpriteRenderer onAttached()!");
+            console.log("Error in SimpleSpriteRenderer onAttached()!");
         }
     };
 

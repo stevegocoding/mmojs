@@ -28,30 +28,14 @@
         </div>
     </div>
 
-    <script src="js/lib/log.js"></script>
-
-    <script src="js/lib/require.js"> </script>
+    <script data-main="js/home" src="js/require.js"> </script>
 
     <script>
 
-        require.config({
-            baseUrl: "/mmojs/js/",
-            paths: {
-                "text" : "lib/text",
-                jquery: 'lib/jquery-1.10.2.min',
-                easeljs: 'lib/easeljs-0.7.0.min',
-                underscore: 'lib/underscore-min'
-            },
-            shim: {
-                easeljs: {
-                    exports: 'createjs'
-                }
-            }
+        /*
+        require(["js/home"], function() {
         });
-
-        require(["home"], function() {
-            console.log("haha");
-        });
+        */
 
         /*
         var Person = function() {

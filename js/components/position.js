@@ -55,7 +55,7 @@ define(['entity/component',
             if (entity.positionComponent === null)
                 entity.positionComponent = this;
             else {
-                log.error("Error in PositionComponet onAttached()!");
+                console.log("Error in PositionComponet onAttached()!");
             }
         };
 

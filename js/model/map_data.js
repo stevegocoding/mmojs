@@ -94,7 +94,6 @@ define(["jquery"], function($) {
             }
         });
 
-        log.info("Collision grid genereated.");
     };
 
     p._loadTileset = function(filePath) {
@@ -102,17 +101,14 @@ define(["jquery"], function($) {
         var tileset = new Image();
         tileset.src = filePath;
 
-        log.info("Loading tileset: " + filePath);
-
         tileset.onload = function() {
             if (tileset.width % self.tilesize > 0) {
                 throw Error("Tileset size should be a multiple of "+ self.tilesize);
             }
-            log.info("Map tileset loaded");
 
             self.tilesetCount -= 1;
             if (self.tilesetCount == 0) {
-                log.debug("All map tilesets loaded. ");
+                console.log("All map tilesets loaded. ");
 
                 self.tilesetsLoaded = true;
                 self._checkReady();

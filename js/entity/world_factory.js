@@ -78,7 +78,6 @@ define(['entity/api',
             // var mapFile = "maps/1x1world.json";
             var mapData = new MapData(mapFile);
             mapData.ready(function() {
-                log.info("Map loaded!");
 
                 var terrain = EntityFactory.createTerrain(mapData);
                 world.setTerrain(terrain);

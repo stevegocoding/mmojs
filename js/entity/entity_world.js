@@ -39,7 +39,6 @@ define(["easeljs"], function() {
                 this.pathingGrid[i][j] = this._mapData.grid[i][j];
             }
         }
-        log.info("Initialized the pathing grid with static colliding cells.");
     };
 
     p.setNavigator = function(nav) {
@@ -262,7 +261,7 @@ define(["easeljs"], function() {
             path = this.navigator.findPath(grid, start, end, false);
         }
         else {
-            log.error("Error while finding the path");
+            console.log("Error while finding the path");
         }
 
         return path;

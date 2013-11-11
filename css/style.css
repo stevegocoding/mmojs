@@ -60,6 +60,18 @@ footer, header, hgroup, menu, nav, section {
 /* End of Reset */
 
 
+@font-face {
+    font-family: 'GraphicPixel';
+    src: url('../fonts/graphicpixel-webfont.eot');
+    src: url('../fonts/graphicpixel-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/graphicpixel-webfont.woff') format('woff'),
+    url('../fonts/graphicpixel-webfont.ttf') format('truetype'),
+    url('../fonts/graphicpixel-webfont.svg#GraphicPixelRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 
 /* General Stylings */
 body {padding:0;margin:0;background:#111;overflow:hidden;border-top:2px solid #707070;}

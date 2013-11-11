@@ -68,11 +68,18 @@ define(["easeljs"], function() {
             if (entity.drawable)
             {
                 var renderer = entity.getComponent("renderer");
+                var text_renderer = entity.getComponent("text_renderer");
+                var rdo = renderer.getDisplayObject();
+                var trdo = text_renderer.getDisplayObject();
+                trdo.x = rdo.getChildAt(0).x;
+                trdo.y = rdo.getChildAt(0).y - 20;
+                rdo.addChild(trdo);
+
                 var idx = this.game.entityStage.getNumChildren() - 2;
                 if (idx < 0)
-                    this.game.entityStage.addChildAt(renderer.getDisplayObject(), 0);
+                    this.game.entityStage.addChildAt(rdo, 0);
                 else
-                    this.game.entityStage.addChildAt(renderer.getDisplayObject(), idx);
+                    this.game.entityStage.addChildAt(rdo, idx);
 
                 /*
                 if (this.game.entityStage.getNumChildren() >= 2 ) {

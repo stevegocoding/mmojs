@@ -8,11 +8,12 @@
 define(["easeljs",
         "entity/entity",
         "entity/entity_registry",
+        "components/text_renderer",
         "components/simple_sprite_renderer",
         "components/map_renderer",
         "components/position",
         "entity/game_types"],
-    function(createjs, Entity, EntityRegistry, SimpleSpriteRenderer, MapRenderer, PositionComponent) {
+    function(createjs, Entity, EntityRegistry, TextRenderer, SimpleSpriteRenderer, MapRenderer, PositionComponent) {
 
     var EntityFactory = function() {
 
@@ -48,6 +49,11 @@ define(["easeljs",
         var renderer = new SimpleSpriteRenderer();
         renderer.setAnimation(entityData.getDefaultLayerData(), "walk_east");
         ent.attachComponent("renderer", renderer);
+
+        var text = new TextRenderer();
+        text.setFont('10 GraphicPixel');
+        text.setText(entityData.name);
+        ent.attachComponent("text_renderer", text);
 
         var pos = new PositionComponent();
         pos.setGridPosition(20, 20);

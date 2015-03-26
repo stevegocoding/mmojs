@@ -6,7 +6,7 @@
  */
 
 require.config({
-    baseUrl: "/mmojs/js/",
+    baseUrl: "/js/",
     paths: {
         "text" : "lib/text",
         jquery: 'lib/jquery-1.10.2.min',

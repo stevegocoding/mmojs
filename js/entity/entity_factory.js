@@ -50,10 +50,12 @@ define(["easeljs",
         renderer.setAnimation(entityData.getDefaultLayerData(), "walk_east");
         ent.attachComponent("renderer", renderer);
 
+        /*
         var text = new TextRenderer();
         text.setFont('10 GraphicPixel');
         text.setText(entityData.name);
         ent.attachComponent("text_renderer", text);
+        */
 
         var pos = new PositionComponent();
         pos.setGridPosition(20, 20);

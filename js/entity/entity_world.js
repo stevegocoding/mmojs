@@ -70,10 +70,12 @@ define(["easeljs"], function() {
                 var renderer = entity.getComponent("renderer");
                 var text_renderer = entity.getComponent("text_renderer");
                 var rdo = renderer.getDisplayObject();
+                /*
                 var trdo = text_renderer.getDisplayObject();
                 trdo.x = rdo.getChildAt(0).x;
                 trdo.y = rdo.getChildAt(0).y - 20;
                 rdo.addChild(trdo);
+                */
 
                 var idx = this.game.entityStage.getNumChildren() - 2;
                 if (idx < 0)
@@ -127,6 +129,9 @@ define(["easeljs"], function() {
     };
 
     p.updateCursor = function() {
+      if (this._mapData === null) {
+        return;
+      }
         var mouse = this.getMouseGridPos(),
             x = mouse.x,
             y = mouse.y;
@@ -220,6 +225,9 @@ define(["easeljs"], function() {
     p.stagePosToGridPos = function(stageX, stageY) {
         var cam = this.camera;
         var s = this.scale;
+        if (this._mapData === null) {
+          return {x: 0, y: 0};
+        }
         var ts = this._mapData.tilesize;
         var offsetX = stageX % (ts * s);
         var offsetY = stageY % (ts * s);

@@ -68,7 +68,7 @@ define(["easeljs"], function() {
             if (entity.drawable)
             {
                 var renderer = entity.getComponent("renderer");
-                var text_renderer = entity.getComponent("text_renderer");
+                // var text_renderer = entity.getComponent("text_renderer");
                 var rdo = renderer.getDisplayObject();
                 /*
                 var trdo = text_renderer.getDisplayObject();

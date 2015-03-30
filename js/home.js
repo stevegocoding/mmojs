@@ -8,7 +8,7 @@
 require.config({
     baseUrl: "/js/",
     paths: {
-        "text" : "lib/text",
+        text : "lib/text",
         jquery: 'lib/jquery-1.10.2.min',
         easeljs: 'lib/easeljs-0.7.0.min',
         underscore: 'lib/underscore-min'
